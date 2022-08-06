@@ -2,18 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://nikotinz.github.io/about.html</loc>
-    <lastmod>2022-08-06T15:10:06.441Z</lastmod>
+    <lastmod>2022-08-06T15:19:28.734Z</lastmod>
   </url>
   <url>
     <loc>https://nikotinz.github.io/index.html</loc>
-    <lastmod>2022-08-06T15:10:07.102Z</lastmod>
+    <lastmod>2022-08-06T15:19:29.479Z</lastmod>
   </url>
   <url>
-    <loc>https://nikotinz.github.io/posts/post-with-code/index.html</loc>
-    <lastmod>2022-08-06T15:10:07.855Z</lastmod>
+    <loc>https://nikotinz.github.io/posts/PVS_1989/PVS_1989.html</loc>
+    <lastmod>2022-08-06T15:19:30.153Z</lastmod>
   </url>
   <url>
-    <loc>https://nikotinz.github.io/posts/welcome/index.html</loc>
-    <lastmod>2022-08-06T15:10:08.312Z</lastmod>
+    <loc>https://nikotinz.github.io/posts/PVS_2021/PVS_2021.html</loc>
+    <lastmod>2022-08-06T15:19:30.704Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nikotinz.github.io/posts/PVS_2022/PVS_2022.html</loc>
+    <lastmod>2022-08-06T15:19:31.303Z</lastmod>
   </url>
 </urlset>

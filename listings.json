@@ -2,8 +2,9 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/post-with-code/index.html",
-      "/posts/welcome/index.html"
+      "/posts/PVS_2022/PVS_2022.html",
+      "/posts/PVS_1989/PVS_1989.html",
+      "/posts/PVS_2021/PVS_2021.html"
     ]
   }
 ]
