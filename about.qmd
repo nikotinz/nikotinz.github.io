@@ -1,16 +1,16 @@
 ---
-title: "About"
+title: "О проекте"
 image: profile.jpg
 about:
   template: jolla
   links:
-    - icon: twitter
-      text: Twitter
-      href: https://twitter.com
+    - icon: mailbox2
+      text: Почта
+      href: mailto:geo.kurs11@yandex.ru
     - icon: github
       text: Github
-      href: https://github.com
+      href: https://github.com/nikotinz/
 title-block-banner: false
 ---
 
-About this blog
+Публикация наборов графиков некоторых социально-экономических показателей развития регионов РФ и стран мира.
