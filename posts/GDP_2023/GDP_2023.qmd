@@ -1,0 +1,116 @@
+## ВВП
+
+ВВП представляет собой сумму валовой добавленной стоимости всех производителей-резидентов в экономике плюс любые налоги на продукты и минус любые субсидии, не включенные в стоимость продуктов. Показатель рассчитывается без вычетов на амортизацию произведенных активов или истощение и деградацию природных ресурсов. Данные указаны в текущих долларах США. Долларовые показатели ВВП пересчитываются из национальной валюты с использованием официальных обменных курсов за один год. Для нескольких стран, где официальный обменный курс не отражает курс, фактически применяемый к фактическим валютным операциям, используется альтернативный коэффициент пересчета.
+
+## Прирост ВВП (годовой %)
+
+Годовой процентный темп роста ВВП в рыночных ценах на основе неизменной местной валюты. Данные основаны на постоянных ценах 2015 года, выраженных в долларах США. ВВП представляет собой сумму валовой добавленной стоимости всех производителей-резидентов в экономике плюс любые налоги на продукты и минус любые субсидии, не включенные в стоимость продуктов. Он рассчитывается без вычетов на амортизацию произведенных активов или истощение и деградацию природных ресурсов.
+
+## ВВП на душу населения, ППС (в текущих международных долларах)
+
+Этот показатель предоставляет значения валового внутреннего продукта (ВВП) на душу населения, выраженные в текущих международных долларах, преобразованные с использованием коэффициента пересчета паритета покупательной способности (ППС). ВВП представляет собой сумму валовой добавленной стоимости всех производителей-резидентов в стране плюс любые налоги на продукцию и минус любые субсидии, не включенные в стоимость продукции. Коэффициент пересчета представляет собой пространственный дефлятор цен и конвертер валют, который учитывает разницу в уровне цен между странами. Общая численность населения представляет собой среднегодовую численность населения, основанную на фактическом определении населения, т.е. включает всех жителей, независимо от правового статуса или гражданства.
+
+
+
+```{r}
+#| echo: false
+library("WDI")
+library("tidyverse")
+# Запускать только при обновлении данных, иногда функция WDI корректно не отрабатывает
+years <- c("2020", "2021", "2022")
+# ВВП
+
+
+df <- WDI(country="all", indicator="NY.GDP.MKTP.CD", latest = NULL, extra = TRUE)
+
+
+
+df <- df |>
+  pivot_wider(names_from = year, values_from = NY.GDP.MKTP.CD) |>
+  select(iso3c, all_of(years)) %>% 
+  mutate(!!years[1] := round(.data[[years[1]]]/1000000000, 0),
+         !!years[2] := round(.data[[years[2]]]/1000000000, 0),
+         !!years[3] := round(.data[[years[3]]]/1000000000, 0)) |> 
+       rename(!!paste0("GDP_", years[1]) := !!sym(years[1]),
+              !!paste0("GDP_", years[2]) := !!sym(years[2]),
+              !!paste0("GDP_", years[3]) := !!sym(years[3]))
+
+# GDP growth (annual %)
+
+df_growth <- WDI(country="all", indicator="NY.GDP.MKTP.KD.ZG", latest = 3, extra = TRUE)
+
+df_growth <- df_growth |>
+  pivot_wider(names_from = year, values_from = NY.GDP.MKTP.KD.ZG) |>
+  select(iso3c, all_of(years)) |>
+  mutate(!!years[1] := round(.data[[years[1]]], 1),
+         !!years[2] := round(.data[[years[2]]], 1),
+         !!years[3] := round(.data[[years[3]]], 1)) |>
+  rename(!!paste0("GROWTH_", years[1]) := !!sym(years[1]),
+         !!paste0("GROWTH_", years[2]) := !!sym(years[2]),
+         !!paste0("GROWTH_", years[3]) := !!sym(years[3]))
+
+
+
+
+# GDP per capita PPP
+df_PPP<- WDI(country="all", indicator="NY.GDP.PCAP.PP.CD", latest = 3, extra = TRUE)
+
+df_PPP <- df_PPP |>
+  pivot_wider(names_from = year, values_from = NY.GDP.PCAP.PP.CD) |>
+  select(iso3c, all_of(years)) |>
+  mutate(!!years[1] := round(.data[[years[1]]], 1),
+         !!years[2] := round(.data[[years[2]]], 1),
+         !!years[3] := round(.data[[years[3]]], 1)) |>
+  rename(!!paste0("PPP_", years[1]) := !!sym(years[1]),
+         !!paste0("PPP_", years[2]) := !!sym(years[2]),
+         !!paste0("PPP_", years[3]) := !!sym(years[3]))
+
+
+popul <- WDI(country="all", indicator="SP.POP.TOTL", latest = 1, extra = TRUE)
+
+popul <- popul |>
+  select(iso3c, SP.POP.TOTL) |>
+  mutate("SP.POP.TOTL" = round(SP.POP.TOTL / 1000000, 1))|>
+  rename("popul" = SP.POP.TOTL)
+
+save(df, file="df_dump.RData")
+save(df_growth, file="df_growth_dump.RData")
+save(df_PPP, file="df_PPP_dump.RData")
+save(popul, file="df_popul.RData")
+
+```
+
+```{r}
+#| echo: false
+load("df_dump.RData")
+load("df_growth_dump.RData")
+load("df_PPP_dump.RData")
+load("df_popul.RData")
+
+df3 <- left_join(df2, df, by = "iso3c") |> 
+  left_join(df_growth, by = "iso3c") |> 
+  left_join(df_PPP, by = "iso3c") |> 
+  left_join(popul, by = "iso3c")
+df3 <- df3 |> select(3, 5:14) |> 
+  relocate(popul, .before = !!!!paste0("GDP_", years[1]))
+```
+
+```{r}
+#| echo: false
+df3 |> arrange(desc(PPP_2020)) |> 
+  head(40) |> 
+  mutate(rank = row_number()) |> 
+  relocate(rank, .before = ru_country) |> 
+  kbl(longtable = T, caption = "Общие показатели", booktabs = TRUE,
+      col.names = c('Ранг', 'Страна*', 'Население**','2019', '2020', '2021', '2019', '2020', '2021', '2019', '2020', '2021')) |> 
+  kable_styling(latex_options = c("striped"), font_size = 10) |> 
+  add_header_above(c(" " = 3, "ВВП***" = 3, "Прирост ВВП, %" = 3, "ВВП по ППС***" = 3)) |> 
+  row_spec(row = 0, bold = TRUE) |> 
+  column_spec(2, width = "27mm") |> 
+  footnote(general_title = "", symbol = c('Страны отобраны по величине ВВП по ППС за 2020 год. ', 'Оценка на середину 2021 года, млн чел.','млрд долл.', "NA - нет данных"), symbol_manual = c('*', '**', '***', '****'))
+
+```
+
+***Источники:*** The World Bank, World Development Indicators (2022).
+
+{{< pagebreak >}}
