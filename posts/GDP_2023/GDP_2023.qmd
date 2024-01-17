@@ -161,25 +161,22 @@ df3 |> arrange(desc(!!sym(paste0("GDP_",years[3])))) |>
         footnote = "NA - нет данных") %>% 
   tab_source_note(md("***Источники:*** The World Bank, World Development Indicators (2023).")) %>% 
   cols_width(
-    ru_country ~ px(150),
+    ru_country ~ px(50),
     starts_with("GDP") ~ px(50),
     starts_with("PPP") ~ px(50),
     starts_with("GROWTH") ~ px(30),
     popul ~ px(50)
   ) %>% 
    tab_style(
-    style = "padding-left:30px;",
+    style = "padding-left:25px;",
     locations = cells_column_labels(columns = !!sym(paste0("GDP_",years[1])))) %>% 
   tab_style(
-    style = "padding-left:30px;",
+    style = "padding-left:25px;",
     locations = cells_column_labels(columns = !!sym(paste0("GROWTH_",years[1])))) %>% 
   tab_style(
-    style = "padding-left:50px;",
+    style = "padding-left:45px;",
     locations = cells_column_labels(columns = !!sym(paste0("PPP_",years[1]))))
-    
-     
 
-  # column_spec(2, width = "27mm") |>
   
 ```
 
