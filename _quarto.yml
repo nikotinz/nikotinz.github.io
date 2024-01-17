@@ -6,12 +6,19 @@ website:
   title: "GeoData"
   navbar:
     right:
-      - about.qmd
+    - href: index.qmd
+      text: Home
+    - about.qmd
 
 format:
   html:
-    theme: 
-      light: lux
-      dark: slate
+    grid:
+      sidebar-width: 250px
+      body-width: 900px
+      margin-width: 250px
+      gutter-width: 1.5rem
+    max-width: 14000px
+    mainfont: "Lato"
+    fontsize: 14px
     css: styles.css
 editor: visual
