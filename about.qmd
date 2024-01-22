@@ -1,6 +1,6 @@
 ---
 title: "О проекте"
-image: profile.jpg
+image: "/docs/images/favicon.png"
 about:
   template: jolla
   links:

@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "GeoData",
     "section": "",
-    "text": "Общие показатели межстранового сравнения\n\n\n\n\n\n\nМировое хозяйство\n\n\n\n\n\n\n\n\n\nJan 18, 2024\n\n\n\n\n\n\n\n\n\n\n\n\nПВС регионов РФ 2022\n\n\n\n\n\n\nДемография\n\n\n\n\n\n\n\n\n\nAug 6, 2022\n\n\n\n\n\n\n\n\n\n\n\n\nПВС регионов РФ 2021\n\n\n\n\n\n\nДемография\n\n\n\n\n\n\n\n\n\nNov 1, 2021\n\n\n\n\n\n\n\n\n\n\n\n\nПВС регионов РФ 1989\n\n\n\n\n\n\nДемография\n\n\n\n\n\n\n\n\n\nOct 30, 2021\n\n\n\n\n\n\nNo matching items"
+    "text": "Общие показатели межстранового сравнения\n\n\n\n\n\n\nМировое хозяйство\n\n\n\nОбщие показатели экономического развития стран мира.\n\n\n\n\n\nJan 18, 2024\n\n\n\n\n\n\n\n\n\n\n\n\nПВС регионов РФ 2022\n\n\n\n\n\n\nДемография\n\n\n\n\n\n\n\n\n\nAug 6, 2022\n\n\n\n\n\n\n\n\n\n\n\n\nПВС регионов РФ 2021\n\n\n\n\n\n\nДемография\n\n\n\n\n\n\n\n\n\nNov 1, 2021\n\n\n\n\n\n\n\n\n\n\n\n\nПВС регионов РФ 1989\n\n\n\n\n\n\nДемография\n\n\n\n\n\n\n\n\n\nOct 30, 2021\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/PVS_2022/PVS_2022.html",
@@ -54,5 +54,12 @@
     "title": "ПВС регионов РФ 2021",
     "section": "",
     "text": "Половозрастная структура населения регионов РФ на 1 января 2021 года.\nСоставлено по данным: https://rosstat.gov.ru/storage/mediabank/Bul_chislen_nasel-pv_01-01-2021.pdf"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "О проекте",
+    "section": "",
+    "text": "Публикация наборов графиков некоторых социально-экономических показателей развития регионов РФ и стран мира."
   }
 ]

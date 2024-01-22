@@ -8,3 +8,7 @@ body {color: black;
 .navbar-dark, .navbar[data-bs-theme=dark] {
             background: darkslategrey;
         height: 50px;}
+
+div.quarto-post .thumbnail img {margin-top: .4em;
+                                width: 10em;
+                                object-fit: cover;}
