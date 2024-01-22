@@ -9,22 +9,186 @@ categories: [Демография]
 
 Составлено по данным: https://rosstat.gov.ru/storage/mediabank/Bul_chislen_nasel-pv_01-01-2022.pdf
 
-![](images/10_pyramid_2022-01.jpg)
+![](images/region (92).jpg)
 
-![](images/9_pyramid_2022.jpg)
+![](images/region (91).jpg)
 
-![](images/8_pyramid_2022-01.jpg)
+![](images/region (90).jpg)
 
-![](images/7_pyramid_2022.jpg)
+![](images/region (89).jpg)
 
-![](images/6_pyramid_2022-01.jpg)
+![](images/region (88).jpg)
 
-![](images/5_pyramid_2022.jpg)
+![](images/region (87).jpg)
 
-![](images/4_pyramid_2022-01.jpg)
+![](images/region (86).jpg)
 
-![](images/3_pyramid_2022.jpg)
+![](images/region (85).jpg)
 
-![](images/2_pyramid_2022-01.jpg)
+![](images/region (84).jpg)
 
-![](images/1_pyramid_2022.jpg)
+![](images/region (83).jpg)
+
+![](images/region (82).jpg)
+
+![](images/region (81).jpg)
+
+![](images/region (80).jpg)
+
+![](images/region (79).jpg)
+
+![](images/region (78).jpg)
+
+![](images/region (77).jpg)
+
+![](images/region (76).jpg)
+
+![](images/region (75).jpg)
+
+![](images/region (74).jpg)
+
+![](images/region (73).jpg)
+
+![](images/region (72).jpg)
+
+![](images/region (71).jpg)
+
+![](images/region (70).jpg)
+
+![](images/region (69).jpg)
+
+![](images/region (68).jpg)
+
+![](images/region (67).jpg)
+
+![](images/region (66).jpg)
+
+![](images/region (65).jpg)
+
+![](images/region (64).jpg)
+
+![](images/region (63).jpg)
+
+![](images/region (62).jpg)
+
+![](images/region (61).jpg)
+
+![](images/region (60).jpg)
+
+![](images/region (59).jpg)
+
+![](images/region (58).jpg)
+
+![](images/region (57).jpg)
+
+![](images/region (56).jpg)
+
+![](images/region (55).jpg)
+
+![](images/region (54).jpg)
+
+![](images/region (53).jpg)
+
+![](images/region (52).jpg)
+
+![](images/region (51).jpg)
+
+![](images/region (50).jpg)
+
+![](images/region (49).jpg)
+
+![](images/region (48).jpg)
+
+![](images/region (47).jpg)
+
+![](images/region (46).jpg)
+
+![](images/region (45).jpg)
+
+![](images/region (44).jpg)
+
+![](images/region (43).jpg)
+
+![](images/region (42).jpg)
+
+![](images/region (41).jpg)
+
+![](images/region (40).jpg)
+
+![](images/region (39).jpg)
+
+![](images/region (38).jpg)
+
+![](images/region (37).jpg)
+
+![](images/region (36).jpg)
+
+![](images/region (35).jpg)
+
+![](images/region (34).jpg)
+
+![](images/region (33).jpg)
+
+![](images/region (32).jpg)
+
+![](images/region (31).jpg)
+
+![](images/region (30).jpg)
+
+![](images/region (29).jpg)
+
+![](images/region (28).jpg)
+
+![](images/region (27).jpg)
+
+![](images/region (26).jpg)
+
+![](images/region (25).jpg)
+
+![](images/region (24).jpg)
+
+![](images/region (23).jpg)
+
+![](images/region (22).jpg)
+
+![](images/region (21).jpg)
+
+![](images/region (20).jpg)
+
+![](images/region (19).jpg)
+
+![](images/region (18).jpg)
+
+![](images/region (17).jpg)
+
+![](images/region (16).jpg)
+
+![](images/region (15).jpg)
+
+![](images/region (14).jpg)
+
+![](images/region (13).jpg)
+
+![](images/region (12).jpg)
+
+![](images/region (11).jpg)
+
+![](images/region (10).jpg)
+
+![](images/region (9).jpg)
+
+![](images/region (8).jpg)
+
+![](images/region (7).jpg)
+
+![](images/region (6).jpg)
+
+![](images/region (5).jpg)
+
+![](images/region (4).jpg)
+
+![](images/region (3).jpg)
+
+![](images/region (2).jpg)
+
+![](images/region (1).jpg)
