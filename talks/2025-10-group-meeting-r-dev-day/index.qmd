@@ -1,0 +1,24 @@
+---
+title: "Contributing to base R: notes from R Dev Day"
+description: "What happens at an R Dev Day, the base R connection bug I worked on, and pair programming with VS Code Live Share."
+date: "2025-10-02"
+date-format: "MMMM YYYY"
+event: "Group meeting, MRC BSU"
+categories: [talk, R, group meeting]
+---
+
+::: meta
+Talk · Group meeting, MRC Biostatistics Unit
+:::
+
+::: links
+[Slides (PDF)](group-meeting-R-Dev-Day-slides.pdf) [R Dev Day issue #27](https://github.com/r-devel/r-dev-day/issues/27)
+:::
+
+A session at our group meeting about my day at the R Dev Day held alongside RSECon25. R Dev Days are short events, usually one day, where new and experienced contributors work together on contributions to base R, with support from the R Core Team.
+
+The session covered:
+
+- how the day is organised: a shared list of open issues on documentation, translation, I/O and low-level code, each with a facilitator and contributors;
+- the issue I worked on, [#27](https://github.com/r-devel/r-dev-day/issues/27), reported by Henrik Bengtsson. In R a connection is identified by a small integer that gets reused, so after `close(con1)` a new connection can take the same number and `con1` silently points to it. Writing to `con1` then writes to the wrong file. Every connection also has a unique internal `id`, visible through the `conn_id` attribute, and that is what can tell the two apart;
+- [VS Code Live Share](https://visualstudio.microsoft.com/services/live-share/), which lets several people edit and debug the same code at once from their own machines.

@@ -1,3 +1,8 @@
 /.quarto/
 /_site/
 .Rproj.user
+
+**/*.quarto_ipynb
+
+# raw material for new posts and talks (not part of the site)
+/add/

@@ -1,0 +1,23 @@
+---
+title: "Running R on Amazon EC2"
+description: "What to do when the HPC allocation runs out: choosing, launching and reusing an Amazon EC2 machine for R simulations."
+date: "2025-11-27"
+date-format: "MMMM YYYY"
+event: "Group meeting, MRC BSU"
+categories: [talk, R, group meeting, cloud computing]
+---
+
+::: meta
+Talk · Group meeting, MRC Biostatistics Unit
+:::
+
+::: links
+[Slides (PDF)](group-meeting-AWS-slides.pdf)
+:::
+
+The session started from a familiar problem: one of the unit's HPC accounts had gone over its CPU-hour limit. Amazon EC2 is one way to keep simulations running in the meantime. I went through the steps I followed:
+
+- choosing a region and an instance type from the price list (for example 64 vCPUs in the London region), and using the EC2 instance type finder, which recommended compute-optimised Graviton instances (C7g, C7gd, C8g) for numerical simulations;
+- the free tier and the starting credits for new accounts;
+- launching an instance from a template, connecting over SSH and checking the load with `htop`;
+- installing R on Debian and saving the configured machine as an Amazon Machine Image (AMI), so the next machine starts with R 4.5.2 already set up.

@@ -1,0 +1,30 @@
+---
+title: "Improving implementation of adaptive multi-arm multi-stage trials: the MAMS R package"
+description: "Talk on version 3 of MAMS: drop-the-losers and separate stopping rules, a modular package structure, and design objects that can be updated."
+date: "2025-02-26"
+event: "ADMTP 2025, Regensburg"
+categories: [talk, MAMS, clinical trials]
+---
+
+::: meta
+Talk · Adaptive Designs and Multiple Testing Procedures workshop (ADMTP) 2025, Regensburg
+:::
+
+::: links
+[Slides (PDF)](MAMS-ADMTP-2025-slides.pdf) [Package on CRAN](https://cran.r-project.org/package=MAMS) [Documentation](https://tjaki.github.io/MAMS/) [Workshop programme](https://admtp.github.io/ADMTP2025/)
+:::
+
+N. Mozgunov, D.-L. Couturier, M. Grayling, D. Magirr, P. Pallmann, T. Jaki
+
+Multi-arm multi-stage trials compare several experimental treatments with a common control, with interim analyses at which arms can stop for futility or efficacy. The gain in efficiency comes with a cost: the multiple testing needed to control the familywise error rate makes these trials harder to design, analyse and implement. This talk was about the implementation side.
+
+The first version of MAMS came out in 2012. Version 1.0 (2016) added simulation and more functions, version 2.0 (2022) added parallel computation and moved parts of the code to C, and version 3.0 (September 2024) is the one this talk covered. Until then the package only had simultaneous stopping rules, where the trial stops as soon as one treatment is found effective or all arms are futile. Version 3 adds two designs:
+
+- drop-the-losers, where the arms are ranked at each interim analysis and a fixed number of the weakest are dropped, so the number of arms at each stage is known in advance;
+- separate stopping rules, where each arm is assessed on its own and stopping one arm does not affect the others.
+
+Each design is now a separate module. A module checks the inputs, computes the boundaries and the sample size, runs simulations, and supplies the design-specific `print()`, `summary()` and `plot()` methods. A new design can be added without touching the others, and designs from earlier versions still work.
+
+In the live part of the talk I set up a three-stage drop-the-losers design with 4, 2 and 1 arms per stage, power 0.9 and a one-sided familywise error rate of 0.05, then went through its `print()` and `summary()` output. The last step showed a new feature: an existing design can be passed back to `mams()` with only the changed arguments, for example `mams(mams_1, power = 0.8)`, which makes it easy to compare versions of a design.
+
+The talk finished with the [documentation site](https://tjaki.github.io/MAMS/), which has tutorials for single-stage and multi-stage designs, operating characteristics and design modifications.

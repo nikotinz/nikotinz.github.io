@@ -1,0 +1,256 @@
+---
+title: "Floating-point precision, memory and partial matching in R"
+description: "Why 0.1 + 0.2 == 0.3 is FALSE in R, how much memory integers and doubles take, and where partial matching of names can catch you out."
+date: "2025-03-20"
+event: "Group meeting, MRC BSU"
+categories: [R, group meeting]
+---
+
+::: {.callout-note appearance="minimal"}
+I prepared this for an R session at our group meeting at the MRC Biostatistics Unit. It was first published on the [group's website](https://jourfixe.github.io/posts/March_2025/March2025.html).
+:::
+
+```{r setup, include=FALSE}
+library(lobstr)
+# options(warnPartialMatchDollar = TRUE)
+```
+
+## Floating-Point Precision in R
+
+Floating-point numbers in R are subject to precision limitations due to [IEEE 754](https://en.wikipedia.org/wiki/IEEE_754) representation. This section explores how seemingly simple operations can lead to unexpected results.
+
+### **Example 1: Floating-Point Comparison Fails**
+
+```{r floating-point-compare, echo=TRUE}
+.1 == .3 / 3
+0.1 + 0.2 == 0.3
+```
+
+**Why does this return `FALSE`?**
+
+-   Due to how floating-point arithmetic works in computers, numbers like `0.1`, `0.3`, and `0.3 / 3` are stored in binary.
+
+-   Some decimal fractions **cannot be represented exactly in binary**, leading to tiny rounding errors. E.g.:
+
+```{r floating-point-compare2, echo=TRUE}
+sprintf("%a", 0.1)
+```
+
+**Explanation:** - 0x indicates a hexadecimal number. - 1.999999999999a represents the normalised significand (mantissa) in base-16 (hexadecimal).
+
+-   p-4 is the exponent: p represents the power of 2 (exponent in base-2); 4 means the value is multiplied by 2⁻⁴.
+
+-   Even though mathematically `.1` and `.3 / 3` should be the same, their internal representations are not exactly equal.
+
+### **Example 2: Inspecting the Actual Value Stored in Memory**
+
+```{r floating-point-print, echo=TRUE}
+.3 / 3
+print(.3 / 3, digits=16)
+```
+
+**Explanation:**
+
+-   The first output shows what R normally prints, which is rounded for display.
+
+-   The second output uses `digits=16` to show more of the actual stored precision.
+
+-   This reveals that `0.3 / 3` is actually stored as `0.09999999999999999`, not exactly `0.1`.
+
+### **Example 3: Using `all.equal()` Instead of `==`**
+
+```{r floating-point-all-equal, echo=TRUE}
+all.equal(.1, .3 / 3)
+```
+
+**Why does this return `TRUE`?**
+
+-   `all.equal()` does not check for **exact** equality but allows a **small tolerance** to account for floating-point errors.
+
+-   It is the **preferred way** to compare floating-point numbers in R.
+
+-   Do not use all.equal directly in `if` expressions—either use `isTRUE(all.equal(...))` or identical if appropriate. If x and y are not equal, it returns a character string like: "Mean relative difference: 5.551115e-17". The if statement expects `TRUE` or `FALSE`, but it receives a string, causing an error.
+
+### **Example 4: Machine Epsilon & Adjusting Tolerance**
+
+```{r floating-point-eps, echo=TRUE}
+.Machine$double.eps
+all.equal(.1, .3 / 3, tolerance = 2.2e-17)
+```
+
+**Explanation:**
+
+-   `.Machine$double.eps` is the smallest possible difference that R can distinguish between two floating-point numbers.
+
+-   The default tolerance of `all.equal()` is `sqrt(.Machine$double.eps)`, but we can adjust it manually if needed.
+
+### **Example 5: Using `round()`**
+
+```{r round function, echo=TRUE}
+.1 == round(.3 / 3, digits = 16)
+```
+
+**Explanation:**
+
+-   `round(..., digits = 16)` forces R to round the computed value to 16 decimal places, reducing precision issues.
+-   The comparison `0.1 == round(0.3 / 3, digits = 16)` now returns `TRUE`
+
+📖 **More details:** [The R Inferno](https://www.burns-stat.com/documents/books/the-r-inferno/)
+
+------------------------------------------------------------------------
+
+## Memory Allocation in R
+
+Memory management in R determines how objects are stored and how much space they occupy. **Understanding how R allocates memory** can help optimize performance, especially with large datasets.
+
+### **Example 6: Comparing Memory Usage of Integer and Double**
+
+```{r memory-allocation, echo=TRUE}
+library(lobstr)
+
+x <- 5    # Stored as double
+obj_size(x)  
+```
+
+```{r memory-allocation2, echo=TRUE}
+y <- 5L   # Stored as integer
+obj_size(y) 
+```
+
+**Why are both `x` and `y` 56 bytes?**
+
+-   Even though `y` is an integer (4 bytes) and `x` is a double (8 bytes), R adds metadata overhead.
+
+-   Every object in R carries around 48 bytes of metadata, including type and reference count.
+
+-   Memory is aligned in multiples of 8 bytes, so the total allocation rounds up to 56 bytes.
+
+### **Example 7: Memory Usage for Large Vectors**
+
+```{r large-vector-memory, echo=TRUE}
+x_vec <- rep(5, 1000000)   # Double vector
+y_vec <- rep(5L, 1000000)  # Integer vector
+
+obj_size(x_vec) 
+obj_size(y_vec)
+```
+
+**Why does the integer vector use half the memory?**
+
+-   Each integer (`5L`) takes 4 bytes per element.
+
+-   Each double (`5`) takes 8 bytes per element.
+
+-   For large datasets, using integers instead of doubles can save significant memory.
+
+### **Example 8: Type Conversion Affects Memory Usage**
+
+```{r memory-conversion, echo=TRUE}
+y_vec[2] = 5.0
+obj_size(y_vec)  
+
+new_vec = lapply(y_vec, as.integer)
+obj_size(new_vec) 
+
+new_vec[2] = 5.5
+new_vec[1:3]
+obj_size(new_vec) 
+```
+
+**Explanation:**
+
+-   Assigning `5.0` to `y_vec` forces R to convert the entire vector to double, increasing memory usage.
+
+-   `lapply(y_vec, as.integer)` converts the values back to integers, but not reducing its size.
+
+-   Assigning `5.5` back forces conversion to double again but only for the selected element because `new_vec` is now a `list`.
+
+📖 **More details:** [Mastering Software Development in R](https://rdpeng.github.io/RProgDA/the-role-of-physical-memory.html)
+
+## Partial Matching in R
+
+R allows **partial matching** of list elements, which can lead to unintended behaviour and difficult-to-debug errors.
+
+### **Example 9: Partial Matching Works**
+
+```{r partial-matching, echo=TRUE}
+test_function <- function(alpha = NULL, power = NULL, p = NULL, p0 = NULL) {
+  user_defined <- list(alpha=alpha, power=power, p=p, p0=p0)
+  user_defined <- Filter(Negate(is.null), user_defined)
+  return(user_defined)
+}
+
+results = test_function(alpha=0.05, power=0.8)
+print(results$p)  # Partial matching
+
+print(results)
+```
+
+-   `test_function` - the function takes four optional arguments, all defaulting to NULL, making them optional.
+
+-   A named list is created to store all input arguments. If an argument is not provided, it remains NULL.
+
+-   Filter(Negate(is.null), user_defined) removes all NULL elements, ensuring only explicitly provided parameters are retained.
+
+**Why is `results$p` returning `0.8`?**
+
+-   Because `p` was not provided in `test_function()` call, but R still allows partial matching.
+
+### **Example 10: Unexpected Partial Matching in Lists**
+
+```{r unexpected-partial-match, echo=TRUE}
+x = list(data = 2, power = 10)
+x$p  
+
+# Avoiding partial matching
+options(warnPartialMatchDollar = TRUE)
+x$p
+
+x[["p"]]
+```
+
+**Best Practices:**
+
+-   Use `options(warnPartialMatchDollar = TRUE)` to warn about unintended partial matches.
+
+-   Always use `x[["p"]]` instead of `x$p` to ensure explicit matching.
+
+📖 **More details:** [Advanced R - Subsetting](https://adv-r.hadley.nz/subsetting.html?q=partial#section-1)
+
+------------------------------------------------------------------------
+
+```{r restore patrtial matching to default}
+#| include: false
+options(warnPartialMatchDollar = FALSE)
+```
+
+## **Extending Subsetting with `[[` Operator**
+
+Now that we've seen how to extract specific elements from function outputs, we can extend this idea to other cases where structured outputs require efficient subsetting.
+
+Extracting values from structured objects often requires a combination of `sapply()`, `lapply()`, and `[[` to efficiently access named list elements.
+
+------------------------------------------------------------------------
+
+## **Example 11: Running Multiple `t.test()` and Extracting P-values**
+
+When running multiple tests, we can store results in a list and apply subsetting with `[[`.
+
+```{r Subsetting with sapply}
+set.seed(123)
+
+data_list <- list(
+  test1 = t.test(rnorm(10), rnorm(10)),
+  test2 = t.test(rnorm(15), rnorm(15)),
+  test3 = t.test(rnorm(20), rnorm(20))
+)
+
+p_values <- sapply(data_list, `[[`, "p.value")
+print(p_values)
+```
+
+-   data_list stores multiple t.test() results in a list.
+-   `sapply(data_list, "[[", "p.value")` extracts p.value from each result.
+-   Similarly, `[[` can extract "conf.int", "statistic", or "parameter", making it a powerful way to subset structured outputs.
+
+📖 **More details:** [Advanced R - Subsetting](https://adv-r.hadley.nz/subsetting.html?q=partial#section-1)

@@ -1,0 +1,36 @@
+---
+title: "Teaching"
+---
+
+## MPhil courses, University of Cambridge
+
+I help teach two courses on Cambridge MPhil programmes:
+
+- **Conducting Research Using R**, part of the MPhil in Population Health Sciences;
+- **Data Analysis**, part of the MPhil in Medical Devices and Advanced Therapies. In 2026 I gave a lecture there on [using LLMs in research with R](blog/2026-10-mphil-llms-in-research/index.qmd).
+
+## R sessions at group meetings, MRC Biostatistics Unit
+
+::: links
+[Group site](https://jourfixe.github.io/)
+:::
+
+Short sessions on practical R for colleagues in the ESD group at the MRC Biostatistics Unit, with live code during the session. The sessions so far:
+
+- [Running computational tasks in R](blog/2024-08-group-meeting-computational-tasks/index.qmd) (August 2024): background jobs, profiling, debugging and parallel loops.
+- [Floating-point precision, memory and partial matching in R](blog/2025-03-group-meeting-precision-memory/index.qmd) (March 2025).
+- [Debugging in R](blog/2025-07-group-meeting-debugging/index.qmd) (July 2025): `browser()`, `debugonce()`, `traceback()`, `recover()` and Shiny.
+- [Contributing to base R: notes from R Dev Day](talks/2025-10-group-meeting-r-dev-day/index.qmd) (October 2025).
+- [Running R on Amazon EC2](talks/2025-11-group-meeting-aws/index.qmd) (November 2025).
+
+## My city as a geography lab
+
+::: links
+[Online book (in Russian)](https://nikotinz.github.io/urban_workshops/) [DOI: 10.5281/zenodo.16985756](https://doi.org/10.5281/zenodo.16985756) [Source](https://github.com/nikotinz/urban_workshops)
+:::
+
+A set of workshops in urban geography, in Russian, written with P.L. Kirillov, S.V. Bannikov, D.V. Bogachev, N.E. Lobzhanidze, A.N. Petrosian, E.I. Shevchuk and A.A. Romashina (2021). The chapters take the reader through a city's history, settlement pattern, street geometry, transport, urban functions, migration and services, and finish with a final project. The book is written in R Markdown with bookdown and is available as HTML, PDF and Word.
+
+## All-Russian Geography Olympiad
+
+Since 2012 I have written tasks for the All-Russian Geography Olympiad for school students and analysed how participants answered them. The tasks and analyses were published most years in *Geografiya v shkole* (Geography at School) and *Geografiya i ekologiya v shkole XXI veka*. In 2015 I co-wrote a book of field-round tasks for grades 9–11. The full list is on [ORCID](https://orcid.org/0000-0003-0941-718X).

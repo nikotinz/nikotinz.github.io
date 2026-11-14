@@ -1,0 +1,29 @@
+---
+title: "Penalised maximum likelihood for interval-censored survival data: the survivalMPL R package"
+description: "Poster on fitting Cox models to exact, right-, left- and interval-censored data in one likelihood, with a smooth baseline hazard."
+date: "2026-09-13"
+event: "ICTMC 2026, Birmingham"
+categories: [poster, survivalMPL, survival analysis]
+---
+
+::: meta
+Poster · International Clinical Trials Methodology Conference (ICTMC) 2026, Birmingham
+:::
+
+::: links
+[Poster (PDF)](survivalMPL-poster-ICTMC-2026.pdf) [Documentation](https://survivalmpl.github.io/survivalMPL/)
+:::
+
+N. Mozgunov, D.-L. Couturier, S. Lo, J. Ma
+
+Trials record visits, not events. When the outcome is assessed at scheduled visits, all we know is that the event happened somewhere between two assessments. Most survival software either drops that interval or replaces it with a single imputed time.
+
+survivalMPL fits a Cox model to exact, right-censored, left-censored and interval-censored observations in a single likelihood, with optional delayed entry. The baseline hazard is a non-negative mixture of basis functions (four families are available), so the package returns a smooth hazard estimate instead of a step function. The smoothing parameter is chosen by marginal likelihood or fixed by the user, and non-negativity is enforced inside the optimiser.
+
+The package has the usual S3 methods (`print`, `summary`, `predict`, `residuals`, `plot`), and the documentation site has seven worked tutorials, including a side-by-side comparison of `coxph()` and `coxph_mpl()`.
+
+## References
+
+Ma J, Couturier D-L, Heritier S, Marschner IC (2022). Penalized likelihood estimation of the proportional hazards model for survival data with interval censoring. *The International Journal of Biostatistics*, 18(2), 553–575. [doi:10.1515/ijb-2020-0104](https://doi.org/10.1515/ijb-2020-0104)
+
+Ma J, Webb A, Hudson HM (2024). *Likelihood Methods in Survival Analysis: With R Examples*. Chapman and Hall/CRC.

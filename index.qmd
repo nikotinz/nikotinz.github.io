@@ -1,14 +1,34 @@
 ---
+title: "Nikita Mozgunov"
+pagetitle: "Nikita Mozgunov"
 listing:
-  contents: posts
-  feed: true
+  id: recent
+  contents:
+    - "talks/*/index.qmd"
+    - "blog/*/index.qmd"
   sort: "date desc"
-  type: default
-  categories: true
+  type: table
+  max-items: 5
+  fields: [date, title]
+  date-format: "MMM YYYY"
   sort-ui: false
   filter-ui: false
-  image-placeholder: "/docs/images/favicon.png"
   table-hover: true
-page-layout: full
-title-block-banner: false
 ---
+
+![](images/photo.jpg){.home-photo fig-alt="Nikita Mozgunov"}
+
+I am a research associate at the [MRC Biostatistics Unit](https://www.mrc-bsu.cam.ac.uk/), University of Cambridge. I write and maintain R packages for clinical trial methods. At the moment that means [MAMS](software.qmd#mams), for designing multi-arm multi-stage trials, and [survivalMPL](software.qmd#survivalmpl), which fits Cox models to interval-censored data by penalised likelihood. I also build the documentation sites for these packages, help teach two courses on Cambridge MPhil programmes and give short talks on R to colleagues at the unit.
+
+Before Cambridge I spent more than ten years at Lomonosov Moscow State University. I did a PhD in economic geography there and stayed on as a research fellow, working on transport emissions, population ageing and rural settlement in Russia. I taught undergraduate and postgraduate students at the university, and worked with advanced school students through the All-Russian Geography Olympiad, where I also wrote the tasks. Alongside the academic work I had jobs in industry as a system administrator and network engineer, and that is where I picked up the practical IT skills I now use to build statistical software.
+
+This site collects my talks, posters, software and notes.
+
+::: home-links
+[GitHub](https://github.com/nikotinz) [LinkedIn](https://www.linkedin.com/in/nikita-mozgunov-0684939b/) [ORCID](https://orcid.org/0000-0003-0941-718X)
+:::
+
+## Recent
+
+::: {#recent}
+:::

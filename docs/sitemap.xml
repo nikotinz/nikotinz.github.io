@@ -1,15 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://nikotinz.github.io/teaching.html</loc>
+    <lastmod>2026-11-14T23:37:35.819Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nikotinz.github.io/talks/2026-ictmc-survivalmpl/index.html</loc>
+    <lastmod>2026-11-14T21:59:16.854Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nikotinz.github.io/talks/2025-10-group-meeting-r-dev-day/index.html</loc>
+    <lastmod>2026-11-14T23:14:53.890Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nikotinz.github.io/talks/2025-02-admtp-mams/index.html</loc>
+    <lastmod>2026-11-14T22:53:40.612Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nikotinz.github.io/software.html</loc>
+    <lastmod>2026-11-14T23:11:42.857Z</lastmod>
+  </url>
+  <url>
     <loc>https://nikotinz.github.io/index.html</loc>
-    <lastmod>2024-01-22T21:18:26.216Z</lastmod>
+    <lastmod>2026-11-14T23:09:46.583Z</lastmod>
   </url>
   <url>
-    <loc>https://nikotinz.github.io/posts/GDP_2023/GDP_2023.html</loc>
-    <lastmod>2024-01-22T21:22:58.356Z</lastmod>
+    <loc>https://nikotinz.github.io/blog/2026-10-mphil-llms-in-research/index.html</loc>
+    <lastmod>2026-11-14T23:41:15.713Z</lastmod>
   </url>
   <url>
-    <loc>https://nikotinz.github.io/about.html</loc>
-    <lastmod>2024-01-22T21:24:38.229Z</lastmod>
+    <loc>https://nikotinz.github.io/blog/2025-07-group-meeting-debugging/index.html</loc>
+    <lastmod>2026-11-14T23:14:53.834Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nikotinz.github.io/blog/2024-08-group-meeting-computational-tasks/index.html</loc>
+    <lastmod>2026-11-14T23:14:53.777Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nikotinz.github.io/blog/2025-03-group-meeting-precision-memory/index.html</loc>
+    <lastmod>2026-11-14T23:14:53.801Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nikotinz.github.io/blog/2026-07-bsu-together-rag/index.html</loc>
+    <lastmod>2026-11-14T23:08:39.286Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nikotinz.github.io/blog/index.html</loc>
+    <lastmod>2026-11-14T22:39:33.379Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nikotinz.github.io/publications.html</loc>
+    <lastmod>2026-11-14T22:39:06.890Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nikotinz.github.io/talks/2024-05-bsu-together/index.html</loc>
+    <lastmod>2026-11-14T22:39:55.688Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nikotinz.github.io/talks/2025-09-rss-mams/index.html</loc>
+    <lastmod>2026-11-14T22:30:02.582Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nikotinz.github.io/talks/2025-11-group-meeting-aws/index.html</loc>
+    <lastmod>2026-11-14T23:14:53.908Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nikotinz.github.io/talks/index.html</loc>
+    <lastmod>2026-11-14T23:36:47.780Z</lastmod>
   </url>
 </urlset>

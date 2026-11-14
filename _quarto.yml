@@ -1,25 +1,50 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - "*.qmd"
+    - "!README.md"
+    - "!add/"
+  resources:
+    - ".nojekyll"
 
 website:
+  title: "Nikita Mozgunov"
   site-url: "https://nikotinz.github.io/"
-  title: "GeoData"
+  description: "Statistical software for clinical trials, talks and notes on R."
+  open-graph: true
   navbar:
+    left:
+      - text: Talks
+        href: talks/index.qmd
+      - text: Blog
+        href: blog/index.qmd
+      - text: Software
+        href: software.qmd
+      - text: Teaching
+        href: teaching.qmd
+      - text: Publications
+        href: publications.qmd
     right:
-    - href: index.qmd
-      text: Home
-    - about.qmd
+      - icon: github
+        href: https://github.com/nikotinz
+        aria-label: GitHub
+      - icon: linkedin
+        href: https://www.linkedin.com/in/nikita-mozgunov-0684939b/
+        aria-label: LinkedIn
+  search: false
+  page-footer:
+    left: "© 2026 Nikita Mozgunov"
+    right: "Built with [Quarto](https://quarto.org/)"
 
 format:
   html:
-    grid:
-      sidebar-width: 250px
-      body-width: 900px
-      margin-width: 250px
-      gutter-width: 1.5rem
-    max-width: 14000px
-    mainfont: "Lato"
-    fontsize: 14px
-    css: styles.css
+    theme: theme.scss
+    toc: false
+    title-block-banner: false
+    smooth-scroll: true
+    link-external-newwindow: false
+    code-copy: true
+    highlight-style: github
+
 editor: visual

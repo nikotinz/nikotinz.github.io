@@ -1,0 +1,33 @@
+---
+title: "Advancing adaptive multi-arm multi-stage clinical trials with the MAMS R package"
+description: "Poster on version 3 of MAMS and its three designs: simultaneous stopping, drop-the-losers and separate stopping rules."
+date: "2025-09-01"
+event: "ICTMC 2024 and RSS International Conference 2025"
+categories: [poster, MAMS, clinical trials]
+---
+
+::: meta
+Poster · International Clinical Trials Methodology Conference (ICTMC) 2024, Edinburgh · RSS International Conference 2025, Edinburgh
+:::
+
+::: links
+[Poster (PDF, RSS 2025 version)](MAMS-poster-RSS-2025.pdf) [Package on CRAN](https://cran.r-project.org/package=MAMS) [Documentation](https://tjaki.github.io/MAMS/)
+:::
+
+Nikita Mozgunov, Dominique-Laurent Couturier, Michael Grayling, Dominic Magirr, Philip Pallmann, Thomas Jaki
+
+Multi-arm multi-stage (MAMS) trials compare several treatments with a shared control over a number of stages. At each interim analysis a single arm or the whole trial can stop for futility or efficacy. Software for these designs exists, but it tends to cover one design or be hard to use for people who don't program much.
+
+The poster describes the current version of the MAMS R package. Each design lives in its own module, so a new method can be added without changing the others. Three designs are available now:
+
+- simultaneous stopping;
+- drop-the-losers (Wason et al., 2017);
+- separate stopping rules, as used in platform trials.
+
+The worked example designs a two-stage trial with four experimental arms, normal endpoints, a one-sided familywise error rate of 0.05 and power of 0.9.
+
+## References
+
+Jaki T, Pallmann P, Magirr D (2019). The R package MAMS for designing multi-arm multi-stage clinical trials. *Journal of Statistical Software*, 88(4), 1–25. [doi:10.18637/jss.v088.i04](https://doi.org/10.18637/jss.v088.i04)
+
+Wason J, Stallard N, Bowden J, Jennison C (2017). A multi-stage drop-the-losers design for multi-arm clinical trials. *Statistical Methods in Medical Research*, 26(1), 508–524. [doi:10.1177/0962280214550759](https://doi.org/10.1177/0962280214550759)

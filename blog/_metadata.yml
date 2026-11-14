@@ -1,0 +1,8 @@
+# Applies to every post in blog/
+
+# Re-run R code only when a post's source changes
+freeze: auto
+
+toc: true
+toc-location: right
+title-block-banner: false

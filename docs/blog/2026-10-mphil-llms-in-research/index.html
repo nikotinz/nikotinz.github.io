@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-10-19">
+<meta name="description" content="Four ways to put an LLM next to R, how to keep trial data away from it, an analysis that looks right but is wrong, and how to use these tools without outsourcing the learning.">
+
+<title>LLMs in research, using R – Nikita Mozgunov</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-88eb214b7c3a2e3ab18e561edfa02d33.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-1716d57601f02fc4624d2c6afc8a5fd6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<meta property="og:title" content="LLMs in research, using R – Nikita Mozgunov">
+<meta property="og:description" content="Four ways to put an LLM next to R, how to keep trial data away from it, an analysis that looks right but is wrong, and how to use these tools without outsourcing the learning.">
+<meta property="og:image" content="https://nikotinz.github.io/blog/2026-10-mphil-llms-in-research/images/three-arm-trap.png">
+<meta property="og:site_name" content="Nikita Mozgunov">
+<meta property="og:image:height" content="980">
+<meta property="og:image:width" content="1560">
+</head>
+
+<body class="nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Nikita Mozgunov</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../talks/index.html"> 
+<span class="menu-text">Talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog/index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../software.html"> 
+<span class="menu-text">Software</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../teaching.html"> 
+<span class="menu-text">Teaching</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/nikotinz"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/nikita-mozgunov-0684939b/"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-an-llm" id="toc-what-is-an-llm" class="nav-link active" data-scroll-target="#what-is-an-llm">What is an LLM?</a></li>
+  <li><a href="#four-ways-to-put-an-llm-next-to-r" id="toc-four-ways-to-put-an-llm-next-to-r" class="nav-link" data-scroll-target="#four-ways-to-put-an-llm-next-to-r">Four ways to put an LLM next to R</a>
+  <ul class="collapse">
+  <li><a href="#ide-assistant" id="toc-ide-assistant" class="nav-link" data-scroll-target="#ide-assistant">IDE assistant</a></li>
+  <li><a href="#coding-agents" id="toc-coding-agents" class="nav-link" data-scroll-target="#coding-agents">Coding agents</a></li>
+  <li><a href="#r-packages-the-llm-as-a-function" id="toc-r-packages-the-llm-as-a-function" class="nav-link" data-scroll-target="#r-packages-the-llm-as-a-function">R packages: the LLM as a function</a></li>
+  </ul></li>
+  <li><a href="#give-the-agent-the-least-access-it-needs" id="toc-give-the-agent-the-least-access-it-needs" class="nav-link" data-scroll-target="#give-the-agent-the-least-access-it-needs">Give the agent the least access it needs</a></li>
+  <li><a href="#what-could-happen" id="toc-what-could-happen" class="nav-link" data-scroll-target="#what-could-happen">What could happen</a></li>
+  <li><a href="#an-analysis-that-looks-right-but-is-wrong" id="toc-an-analysis-that-looks-right-but-is-wrong" class="nav-link" data-scroll-target="#an-analysis-that-looks-right-but-is-wrong">An analysis that looks right but is wrong</a></li>
+  <li><a href="#six-patterns-that-beat-vibe-coding" id="toc-six-patterns-that-beat-vibe-coding" class="nav-link" data-scroll-target="#six-patterns-that-beat-vibe-coding">Six patterns that beat vibe coding</a></li>
+  <li><a href="#dont-outsource-the-learning" id="toc-dont-outsource-the-learning" class="nav-link" data-scroll-target="#dont-outsource-the-learning">Don’t outsource the learning</a></li>
+  <li><a href="#where-llms-are-useful" id="toc-where-llms-are-useful" class="nav-link" data-scroll-target="#where-llms-are-useful">Where LLMs are useful</a></li>
+  <li><a href="#from-the-discussion" id="toc-from-the-discussion" class="nav-link" data-scroll-target="#from-the-discussion">From the discussion</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content" tabindex="-1">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">LLMs in research, using R</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">R</div>
+    <div class="quarto-category">LLM</div>
+    <div class="quarto-category">teaching</div>
+    <div class="quarto-category">coding agents</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Four ways to put an LLM next to R, how to keep trial data away from it, an analysis that looks right but is wrong, and how to use these tools without outsourcing the learning.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 19, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Based on a lecture I gave in October 2026 in the Data Analysis course of the MPhil in Medical Devices and Advanced Therapies at the University of Cambridge. <a href="LLMs-in-research-slides.pdf">Slides (PDF)</a></p>
+</div>
+</div>
+</div>
+<p>I work at the MRC Biostatistics Unit, where I build clinical trial design software in R and Shiny, and I use LLMs every day. That is exactly why this talk is cautious rather than enthusiastic. My aim was that by the end, students could pick a tool that does more than copy and paste into a web chat, keep trial data away from it, recognise an analysis that looks right but is not, and use LLMs in a way that builds their statistical judgement instead of replacing it.</p>
+<p>A disclaimer first. None of this is an instruction. Nobody on the course has to use AI or pay for an account. The first practical question is simply what you already have: most universities give students some access through their institutional accounts, for example Gemini through a university Google account, or Microsoft Copilot. Find out what yours is, and use that.</p>
+<section id="what-is-an-llm" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-an-llm">What is an LLM?</h2>
+<p>A large language model is trained on a huge amount of text: books, websites, articles and code. From that text it learns which words usually follow which, and when it answers, it writes the most likely next word, then the next, and so on.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/how-an-llm-writes.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="How an LLM writes an answer, one likely word at a time."><img src="images/how-an-llm-writes.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%" alt="Diagram in three steps: 1. Read a huge amount of text; 2. Learn which words usually follow which; 3. Write the answer one likely word at a time. Example: 'The patient was given a ___' with candidate words placebo 41%, dose 27%, new drug 18%. Two notes: it can help with R because it has read millions of examples of R code; it makes very good guesses, not guaranteed facts, so always check its work."></a></p>
+</figure>
+</div>
+<figcaption>How an LLM writes an answer, one likely word at a time.</figcaption>
+</figure>
+</div>
+<p>Two things follow. First, the training data are a mix of everything people have written: scientific papers, but also Reddit posts and much else of uneven quality. The companies filter it, but the data sets are enormous and the filtering is hard. Second, an answer is the most likely answer, not necessarily the correct one. Ask what two plus two is and you will get four, because four is by far the most common continuation. For a harder calculation the model may produce a plausible-looking number without calculating anything. The companies try to make models call a calculator in such cases, but from the outside you can’t always tell whether a number was computed or generated.</p>
+</section>
+<section id="four-ways-to-put-an-llm-next-to-r" class="level2">
+<h2 class="anchored" data-anchor-id="four-ways-to-put-an-llm-next-to-r">Four ways to put an LLM next to R</h2>
+<p>LLMs existed well before most of us used them. What changed everything was the chat interface: you ask in plain language and get a plain-language answer, with nothing to install. But the web chat is only one of four ways to use these models with R, and the others give the model more context.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Web chat</th>
+<th>IDE assistant</th>
+<th>Coding agent</th>
+<th>R packages</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Examples</td>
+<td>ChatGPT, Claude, Gemini, Copilot</td>
+<td>Posit Assistant (RStudio, Positron), GitHub Copilot</td>
+<td>Claude Code, OpenAI Codex, Google Antigravity</td>
+<td><code>ellmer</code>, <code>btw</code>, <code>mcptools</code></td>
+</tr>
+<tr class="even">
+<td>What it sees</td>
+<td>Only what you paste</td>
+<td>Open files; with Posit, your live R session</td>
+<td>The whole project folder, and it runs commands</td>
+<td>Exactly what your code sends it</td>
+</tr>
+<tr class="odd">
+<td>Good for</td>
+<td>Concepts, error messages, a second opinion</td>
+<td>Inline edits, explaining code in place</td>
+<td>Refactoring, tests, packages, Shiny apps</td>
+<td>LLM steps inside a reproducible pipeline</td>
+</tr>
+</tbody>
+</table>
+<p>Most students stop at the first column: copy code into a web chat and copy the answer back. That works for concepts and error messages, but the model sees only what you paste, and there is a limit on how much you can paste. You can’t give it a whole dissertation. It also has no idea what your data or R session look like, so it guesses, and you are tempted to paste data to help it. Moving to the right, the model gets more context and more freedom to act. That makes it more useful, and it means there is more to check.</p>
+<section id="ide-assistant" class="level3">
+<h3 class="anchored" data-anchor-id="ide-assistant">IDE assistant</h3>
+<p>RStudio now has an assistant built in. In the lecture I opened it and asked it, in plain English, to load the films data set from the previous practical and make a subset with only the highly rated films, the same task the students had done by hand. I did not say where the file was or which column held the rating. Because the assistant can see the working directory and the R session, it found the file, explored the data, worked out which column to use, and ran the code itself.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/posit-assistant.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Choosing a model provider for Posit Assistant in RStudio."><img src="images/posit-assistant.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%" alt="RStudio with the Posit Assistant pane open and an 'AI Providers' dialog listing Posit AI Pass, Anthropic, OpenAI, Google Gemini (connected), AWS Bedrock, Google Vertex AI, Microsoft Foundry, OpenRouter and others."></a></p>
+</figure>
+</div>
+<figcaption>Choosing a model provider for Posit Assistant in RStudio.</figcaption>
+</figure>
+</div>
+</section>
+<section id="coding-agents" class="level3">
+<h3 class="anchored" data-anchor-id="coding-agents">Coding agents</h3>
+<p>A coding agent goes a step further. It reads your project, makes a plan, edits files, runs commands, including <code>Rscript</code>, reads the output and tries again. You talk to it in plain language, as in a chat, but it can also create and analyse files in any folder you give it access to. For some researchers this has changed how they work.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Where it runs</th>
+<th>How it works</th>
+<th>Guardrails to set</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Claude Code (Anthropic)</td>
+<td>Terminal, desktop app, IDE extensions</td>
+<td>Reads the repo, edits files, runs R and shell commands; follows <code>CLAUDE.md</code></td>
+<td>Permission modes, deny rules for paths, sandbox</td>
+</tr>
+<tr class="even">
+<td>OpenAI Codex</td>
+<td>Command line, IDE, desktop app, cloud</td>
+<td>The same loop; follows <code>AGENTS.md</code></td>
+<td>Sandbox (read-only or workspace-write), approval policy</td>
+</tr>
+<tr class="odd">
+<td>Google Antigravity</td>
+<td>Desktop app and command line</td>
+<td>Runs several agents in parallel; built-in browser</td>
+<td>Review the agents’ plans before they act; the newest and least mature</td>
+</tr>
+</tbody>
+</table>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/antigravity-cli.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Antigravity CLI running inside a JetBrains IDE. Screenshot from the Antigravity CLI Companion plugin page, JetBrains Marketplace."><img src="images/antigravity-cli.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%" alt="Terminal panel in a JetBrains IDE showing Antigravity CLI 1.0.0 with Gemini 3.5 Flash, reviewing selected code and listing the files it read."></a></p>
+</figure>
+</div>
+<figcaption>Antigravity CLI running inside a JetBrains IDE. Screenshot from the <a href="https://plugins.jetbrains.com/plugin/31899-antigravity-cli-companion">Antigravity CLI Companion plugin page</a>, JetBrains Marketplace.</figcaption>
+</figure>
+</div>
+<p>The names will change; by next year the front-runners may be different. What they share is more important. Each has a plain-text rules file for the project (<code>CLAUDE.md</code>, <code>AGENTS.md</code>) where you can write things like <em>the treatment arm is a factor</em>, <em>never print rows of data</em>, <em>use the synthetic data in <code>data-synth/</code></em>. Write those rules. And remember: anything the agent can run, it can see the output of.</p>
+</section>
+<section id="r-packages-the-llm-as-a-function" class="level3">
+<h3 class="anchored" data-anchor-id="r-packages-the-llm-as-a-function">R packages: the LLM as a function</h3>
+<p>The fourth option is different in kind. With <a href="https://ellmer.tidyverse.org/"><code>ellmer</code></a>, the LLM becomes one step in a script you control. You decide exactly what is sent, and you get the result back as an R object.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ellmer)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_anthropic</span>()  <span class="co"># or chat_openai(), ...</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Explain nAGQ in lme4::glmer in two lines"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Free text -&gt; typed R columns</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>ae <span class="ot">&lt;-</span> <span class="fu">type_object</span>(</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">term    =</span> <span class="fu">type_string</span>(<span class="st">"Adverse event term"</span>),</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">serious =</span> <span class="fu">type_boolean</span>()</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Sensitive text: keep it on your machine</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>local <span class="ot">&lt;-</span> <span class="fu">chat_ollama</span>(<span class="at">model =</span> <span class="st">"llama3.2"</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>local<span class="sc">$</span><span class="fu">chat_structured</span>(narrative, <span class="at">type =</span> ae)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The second block is structured output: you define a type, and the model’s answer comes back as typed columns, here a term and a seriousness flag coded from a free-text adverse event description. Treat that like any other measurement instrument and check it against a sample you coded by hand before you trust it. Adverse event narratives are patient data, so the last block sends them to a local model through <a href="https://ollama.com/">Ollama</a> instead of a cloud service. Local models are smaller and weaker, but nothing leaves your machine. One more habit: record the model name and version with your results, because the same prompt next month may give a different answer.</p>
+</section>
+</section>
+<section id="give-the-agent-the-least-access-it-needs" class="level2">
+<h2 class="anchored" data-anchor-id="give-the-agent-the-least-access-it-needs">Give the agent the least access it needs</h2>
+<p>Agents are powerful, and they have access to your working directory. Sometimes they reach outside it. The safest set-up is one where there is nothing to leak.</p>
+<ol type="1">
+<li><p>Keep the real data outside the agent’s folder. The project holds your code and a synthetic twin of the data: the same variable names, types and coding, with fake values. You can simulate it in a few lines, or use a package such as <code>synthpop</code>.</p></li>
+<li><p>Deny what the agent does not need. In Claude Code, add deny rules to <code>.claude/settings.json</code> for the data folder and for <code>.Renviron</code>, where API keys live:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span> <span class="dt">"permissions"</span><span class="fu">:</span> <span class="fu">{</span> <span class="dt">"deny"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Read(./data/**)"</span><span class="ot">,</span> <span class="st">"Read(**/.Renviron)"</span> <span class="ot">]</span> <span class="fu">}</span> <span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In Codex, start without write access:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">codex</span> <span class="at">--sandbox</span> read-only <span class="at">--ask-for-approval</span> on-request</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>Approve commands one at a time until you trust the set-up.</p></li>
+</ol>
+<p>These settings are easy to over-trust. Codex’s read-only mode stops the agent writing files, not reading them. Claude Code’s deny rules apply to its own file tools and to shell commands it recognises, not to an R script that opens the file itself. And if the agent can run code, it sees the output: one <code>print(head(df))</code> and real rows are in the conversation. That is why the first step matters most.</p>
+</section>
+<section id="what-could-happen" class="level2">
+<h2 class="anchored" data-anchor-id="what-could-happen">What could happen</h2>
+<p>Two real examples. In one, posted on <a href="https://www.reddit.com/r/ClaudeCode/comments/1sbpfdl/claude_code_deleted_my_entire_202gb_archive_after/">Reddit</a>, Claude Code ran a chained command that deleted a disk volume and reported: <em>“I need to be transparent. There’s a problem – I made a serious mistake.”</em> 202 GB of work was gone. Imagine getting that message a month before your viva.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/agent-deleted-data.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Claude Code reporting that 202 GB of data had been deleted. Screenshot from a post on r/ClaudeCode, Reddit."><img src="images/agent-deleted-data.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%" alt="Terminal output: the agent ran df on /Volumes/Work, then wrote 'I need to be transparent. There's a problem – I made a serious mistake.' It explains that deleteVolume and addVolume ran as a chained command, the old Work volume with 202GB of data was deleted, and two empty volumes were created."></a></p>
+</figure>
+</div>
+<figcaption>Claude Code reporting that 202 GB of data had been deleted. Screenshot from a <a href="https://www.reddit.com/r/ClaudeCode/comments/1sbpfdl/claude_code_deleted_my_entire_202gb_archive_after/">post on r/ClaudeCode</a>, Reddit.</figcaption>
+</figure>
+</div>
+<p>In the other, reported by <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/claude-powered-ai-coding-agent-deletes-entire-company-database-in-9-seconds-backups-zapped-after-cursor-tool-powered-by-anthropics-claude-goes-rogue">Tom’s Hardware</a>, the founder of PocketOS, a software platform for car rental businesses, summed it up:</p>
+<blockquote class="blockquote">
+<p>“Yesterday afternoon, an AI coding agent — Cursor running Anthropic’s flagship Claude Opus 4.6 — deleted our production database and all volume-level backups in a single API call to Railway, our infrastructure provider. It took 9 seconds.”</p>
+</blockquote>
+<p>Nine seconds to lose everything. Be careful with powerful tools.</p>
+</section>
+<section id="an-analysis-that-looks-right-but-is-wrong" class="level2">
+<h2 class="anchored" data-anchor-id="an-analysis-that-looks-right-but-is-wrong">An analysis that looks right but is wrong</h2>
+<p>The more common risk is quieter. Here is a simple three-arm trial: placebo, drug A and drug B, 100 patients per arm, and the outcome is the change in systolic blood pressure at 12 weeks. We ask an LLM to “analyse the outcome by arm”. So far the practice is good: the LLM never sees the data. It writes code, we run it, and it writes up the result:</p>
+<blockquote class="blockquote">
+<p>“There is no evidence that treatment affected systolic blood pressure (β = −1.0 mmHg, 95% CI −3.1 to 1.1; p = 0.35).”</p>
+</blockquote>
+<p>The problem is that <code>arm</code> was stored as 1, 2 and 3. R treated it as a number and fitted one straight line through three unrelated drugs, as if drug B were “twice as much” drug A. It is the same thing students met earlier in the course with the number of cylinders in <code>mtcars</code>, which has to be a factor before the analysis makes sense.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/three-arm-trap.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="The LLM’s straight line (dashed orange) against the actual arm means with 95% confidence intervals (blue)."><img src="images/three-arm-trap.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%" alt="Plot of change in systolic blood pressure at 12 weeks by arm. Blue points with 95% intervals: placebo about −2, drug A about −9, drug B about −4 mmHg. A dashed orange straight line runs from about −4 to −6 across the three arms, slope −1.0 per arm."></a></p>
+</figure>
+</div>
+<figcaption>The LLM’s straight line (dashed orange) against the actual arm means with 95% confidence intervals (blue).</figcaption>
+</figure>
+</div>
+<p>A straight line through a V shape averages the effect away. One line of code fixes it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>trial<span class="sc">$</span>arm <span class="ot">&lt;-</span> <span class="fu">factor</span>(trial<span class="sc">$</span>arm, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Placebo"</span>, <span class="st">"Drug A"</span>, <span class="st">"Drug B"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>vs placebo</th>
+<th>Difference, mmHg (95% CI)</th>
+<th>p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Drug A</td>
+<td>−7.0 (−11.2 to −2.8)</td>
+<td>0.001</td>
+</tr>
+<tr class="even">
+<td>Drug B</td>
+<td>−2.0 (−6.2 to 2.2)</td>
+<td>0.35</td>
+</tr>
+</tbody>
+</table>
+<p>Drug A works, and the LLM’s model could not see it. Note what did not happen: no error and no warning. The code is valid R. It is just the wrong model. In a real multi-arm trial you would also pre-specify how to handle multiple comparisons against the shared control, for example with Dunnett’s test, and drug A would survive that easily.</p>
+</section>
+<section id="six-patterns-that-beat-vibe-coding" class="level2">
+<h2 class="anchored" data-anchor-id="six-patterns-that-beat-vibe-coding">Six patterns that beat vibe coding</h2>
+<p>Vibe coding means describing what you want, accepting whatever runs and moving on. Almost anyone can now produce code that runs and a result that looks like what they expected. That is fine for a throwaway plot. It is not fine for an analysis someone will base a decision on, because you don’t know whether the result can be trusted. Instead:</p>
+<ol type="1">
+<li><strong>Spec first.</strong> Write the estimand and the analysis plan yourself, before the LLM is involved, the same way you fix the null and alternative hypotheses before seeing the data. The LLM then implements your plan instead of guessing one.</li>
+<li><strong>Explain before run.</strong> Ask for its plan and assumptions before any code. If you are learning, ask for hints, not answers.</li>
+<li><strong>Simulate the truth.</strong> Plant a known effect in synthetic data. Code that cannot recover it is wrong. The three-arm example fails this test immediately.</li>
+<li><strong>Tests as the contract.</strong> A few <code>testthat</code> checks, for the number per arm, the factor levels and a known answer, define when the work is done.</li>
+<li><strong>Second opinion.</strong> Statisticians have always checked new work this way: someone else solves the same problem independently, or you solve it a second way. A fresh session, with no memory of the first, or a different model can play that role. Ask it what assumptions the analysis makes, not whether it is right.</li>
+<li><strong>Constrain the choice.</strong> Let the LLM pick from a list of methods you chose, and generate the code from templates. Less creative, much easier to check.</li>
+</ol>
+</section>
+<section id="dont-outsource-the-learning" class="level2">
+<h2 class="anchored" data-anchor-id="dont-outsource-the-learning">Don’t outsource the learning</h2>
+<p>The best evidence so far comes from a field experiment with about a thousand high-school maths students (<a href="https://doi.org/10.1073/pnas.2422633122">Bastani et al., 2025</a>). During practice sessions, students had either no AI, a standard ChatGPT-style interface (GPT Base), or a GPT-4 tutor with safeguards designed by teachers that gave hints instead of answers (GPT Tutor).</p>
+<p>During practice, both AI groups did much better than the control group: GPT Base by 48% and GPT Tutor by 127%. Then the AI was taken away for the exam. GPT Base students scored 17% lower than students who never had AI. GPT Tutor students showed no significant drop.</p>
+<p>It is a different setting from an MPhil, but the mechanism, using the tool as a crutch, carries over. On the course, as in that exam, the AI will be removed at some point. Ways to use it that build skill:</p>
+<ul>
+<li>try first, then ask it to explain;</li>
+<li>ask for hints, not answers;</li>
+<li>have it quiz you or set practice problems;</li>
+<li>get feedback on an interpretation you wrote yourself.</li>
+</ul>
+<p>Ways that quietly replace skill:</p>
+<ul>
+<li>letting it choose the model you are meant to learn to choose;</li>
+<li>reading its interpretation before writing your own;</li>
+<li>using it instead of your trial statistician;</li>
+<li>anything your assessment does not permit.</li>
+</ul>
+<p>If you couldn’t do it without the LLM, you are not ready to delegate it.</p>
+</section>
+<section id="where-llms-are-useful" class="level2">
+<h2 class="anchored" data-anchor-id="where-llms-are-useful">Where LLMs are useful</h2>
+<p>None of this means “don’t use them”. I use them a lot in my own R and Shiny work. The useful question is not whether to use an LLM, but whether you can check the answer.</p>
+<ul>
+<li><strong>Good fit, quick to check:</strong> explaining an error message, explaining unfamiliar code, writing tests and documentation, translating SAS or Stata to R, simulating data to test an analysis. An error explanation either fixes the error or it doesn’t, and translated code gives the same numbers as the original or it doesn’t. Before these tools, an unclear R error could cost hours.</li>
+<li><strong>Use with care, needs expertise to check:</strong> suggesting candidate models, listing a model’s assumptions, drafting a methods paragraph, reviewing your code. A suggested model can be wrong in ways a beginner won’t spot, and a model asked only to check your code will sometimes rewrite it the way it likes.</li>
+<li><strong>Keep it yours:</strong> choosing the estimand, picking the primary analysis, anything with participant data, and the final interpretation. Never put participant data into a public LLM. Depending on the data and the agreement, that can cost someone their job or break the law. The text and the conclusions of your work should be yours.</li>
+</ul>
+<p>The rule of thumb: use it where checking is faster than doing. Which means that the more statistics you know, the more useful the tool becomes.</p>
+</section>
+<section id="from-the-discussion" class="level2">
+<h2 class="anchored" data-anchor-id="from-the-discussion">From the discussion</h2>
+<p><em>What about sensitive data?</em> When a service is free, you are often the product, and what you give it is your questions, your data and your ideas. Use the tools the university provides under its contracts, and be especially careful with patient data, which must stay within the rules that apply to it. One way out is to run models locally. The NHS, for example, has access to the data but needs to keep it inside its own infrastructure, so local models are an option there, and running good models on ordinary infrastructure instead of huge data centres is likely to become more common.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p>Bastani H, Bastani O, Sungu A, Ge H, Kabakcı Ö, Mariman R (2025). Generative AI without guardrails can harm learning: evidence from high school mathematics. <em>Proceedings of the National Academy of Sciences</em>, 122(26), e2422633122. <a href="https://doi.org/10.1073/pnas.2422633122">doi:10.1073/pnas.2422633122</a></p>
+<p>“Claude Code deleted my entire 202GB archive after…” r/ClaudeCode, Reddit. <a href="https://www.reddit.com/r/ClaudeCode/comments/1sbpfdl/claude_code_deleted_my_entire_202gb_archive_after/">reddit.com</a></p>
+<p>Tyson M (2026). Claude-powered AI coding agent deletes entire company database in 9 seconds. <em>Tom’s Hardware</em>, 27 April 2026. <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/claude-powered-ai-coding-agent-deletes-entire-company-database-in-9-seconds-backups-zapped-after-cursor-tool-powered-by-anthropics-claude-goes-rogue">tomshardware.com</a></p>
+<p>Antigravity CLI Companion, JetBrains Marketplace. <a href="https://plugins.jetbrains.com/plugin/31899-antigravity-cli-companion">plugins.jetbrains.com</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/nikotinz\.github\.io\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 Nikita Mozgunov</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

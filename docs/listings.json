@@ -2,10 +2,43 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/GDP_2023/GDP_2023.html",
-      "/posts/PVS_2022/PVS_2022.html",
-      "/posts/PVS_2021/PVS_2021.html",
-      "/posts/PVS_1989/PVS_1989.html"
+      "/blog/2026-10-mphil-llms-in-research/index.html",
+      "/talks/2026-ictmc-survivalmpl/index.html",
+      "/blog/2026-07-bsu-together-rag/index.html",
+      "/talks/2025-11-group-meeting-aws/index.html",
+      "/talks/2025-10-group-meeting-r-dev-day/index.html",
+      "/talks/2025-09-rss-mams/index.html",
+      "/blog/2025-07-group-meeting-debugging/index.html",
+      "/blog/2025-03-group-meeting-precision-memory/index.html",
+      "/talks/2025-02-admtp-mams/index.html",
+      "/blog/2024-08-group-meeting-computational-tasks/index.html",
+      "/talks/2024-05-bsu-together/index.html"
+    ]
+  },
+  {
+    "listing": "/blog/index.html",
+    "items": [
+      "/blog/2026-10-mphil-llms-in-research/index.html",
+      "/blog/2026-07-bsu-together-rag/index.html",
+      "/blog/2025-07-group-meeting-debugging/index.html",
+      "/blog/2025-03-group-meeting-precision-memory/index.html",
+      "/blog/2024-08-group-meeting-computational-tasks/index.html"
+    ]
+  },
+  {
+    "listing": "/talks/index.html",
+    "items": [
+      "/blog/2026-10-mphil-llms-in-research/index.html",
+      "/talks/2026-ictmc-survivalmpl/index.html",
+      "/blog/2026-07-bsu-together-rag/index.html",
+      "/talks/2025-11-group-meeting-aws/index.html",
+      "/talks/2025-10-group-meeting-r-dev-day/index.html",
+      "/talks/2025-09-rss-mams/index.html",
+      "/blog/2025-07-group-meeting-debugging/index.html",
+      "/blog/2025-03-group-meeting-precision-memory/index.html",
+      "/talks/2025-02-admtp-mams/index.html",
+      "/blog/2024-08-group-meeting-computational-tasks/index.html",
+      "/talks/2024-05-bsu-together/index.html"
     ]
   }
 ]

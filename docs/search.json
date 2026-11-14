@@ -1,65 +1,513 @@
 [
   {
+    "objectID": "teaching.html",
+    "href": "teaching.html",
+    "title": "Teaching",
+    "section": "",
+    "text": "I help teach two courses on Cambridge MPhil programmes:\n\nConducting Research Using R, part of the MPhil in Population Health Sciences;\nData Analysis, part of the MPhil in Medical Devices and Advanced Therapies. In 2026 I gave a lecture there on using LLMs in research with R."
+  },
+  {
+    "objectID": "teaching.html#mphil-courses-university-of-cambridge",
+    "href": "teaching.html#mphil-courses-university-of-cambridge",
+    "title": "Teaching",
+    "section": "",
+    "text": "I help teach two courses on Cambridge MPhil programmes:\n\nConducting Research Using R, part of the MPhil in Population Health Sciences;\nData Analysis, part of the MPhil in Medical Devices and Advanced Therapies. In 2026 I gave a lecture there on using LLMs in research with R."
+  },
+  {
+    "objectID": "teaching.html#r-sessions-at-group-meetings-mrc-biostatistics-unit",
+    "href": "teaching.html#r-sessions-at-group-meetings-mrc-biostatistics-unit",
+    "title": "Teaching",
+    "section": "R sessions at group meetings, MRC Biostatistics Unit",
+    "text": "R sessions at group meetings, MRC Biostatistics Unit\n\nGroup site\n\nShort sessions on practical R for colleagues in the ESD group at the MRC Biostatistics Unit, with live code during the session. The sessions so far:\n\nRunning computational tasks in R (August 2024): background jobs, profiling, debugging and parallel loops.\nFloating-point precision, memory and partial matching in R (March 2025).\nDebugging in R (July 2025): browser(), debugonce(), traceback(), recover() and Shiny.\nContributing to base R: notes from R Dev Day (October 2025).\nRunning R on Amazon EC2 (November 2025)."
+  },
+  {
+    "objectID": "teaching.html#my-city-as-a-geography-lab",
+    "href": "teaching.html#my-city-as-a-geography-lab",
+    "title": "Teaching",
+    "section": "My city as a geography lab",
+    "text": "My city as a geography lab\n\nOnline book (in Russian) DOI: 10.5281/zenodo.16985756 Source\n\nA set of workshops in urban geography, in Russian, written with P.L. Kirillov, S.V. Bannikov, D.V. Bogachev, N.E. Lobzhanidze, A.N. Petrosian, E.I. Shevchuk and A.A. Romashina (2021). The chapters take the reader through a city’s history, settlement pattern, street geometry, transport, urban functions, migration and services, and finish with a final project. The book is written in R Markdown with bookdown and is available as HTML, PDF and Word."
+  },
+  {
+    "objectID": "teaching.html#all-russian-geography-olympiad",
+    "href": "teaching.html#all-russian-geography-olympiad",
+    "title": "Teaching",
+    "section": "All-Russian Geography Olympiad",
+    "text": "All-Russian Geography Olympiad\nSince 2012 I have written tasks for the All-Russian Geography Olympiad for school students and analysed how participants answered them. The tasks and analyses were published most years in Geografiya v shkole (Geography at School) and Geografiya i ekologiya v shkole XXI veka. In 2015 I co-wrote a book of field-round tasks for grades 9–11. The full list is on ORCID."
+  },
+  {
+    "objectID": "talks/2026-ictmc-survivalmpl/index.html",
+    "href": "talks/2026-ictmc-survivalmpl/index.html",
+    "title": "Penalised maximum likelihood for interval-censored survival data: the survivalMPL R package",
+    "section": "",
+    "text": "Poster · International Clinical Trials Methodology Conference (ICTMC) 2026, Birmingham\nN. Mozgunov, D.-L. Couturier, S. Lo, J. Ma\nTrials record visits, not events. When the outcome is assessed at scheduled visits, all we know is that the event happened somewhere between two assessments. Most survival software either drops that interval or replaces it with a single imputed time.\nsurvivalMPL fits a Cox model to exact, right-censored, left-censored and interval-censored observations in a single likelihood, with optional delayed entry. The baseline hazard is a non-negative mixture of basis functions (four families are available), so the package returns a smooth hazard estimate instead of a step function. The smoothing parameter is chosen by marginal likelihood or fixed by the user, and non-negativity is enforced inside the optimiser.\nThe package has the usual S3 methods (print, summary, predict, residuals, plot), and the documentation site has seven worked tutorials, including a side-by-side comparison of coxph() and coxph_mpl()."
+  },
+  {
+    "objectID": "talks/2026-ictmc-survivalmpl/index.html#references",
+    "href": "talks/2026-ictmc-survivalmpl/index.html#references",
+    "title": "Penalised maximum likelihood for interval-censored survival data: the survivalMPL R package",
+    "section": "References",
+    "text": "References\nMa J, Couturier D-L, Heritier S, Marschner IC (2022). Penalized likelihood estimation of the proportional hazards model for survival data with interval censoring. The International Journal of Biostatistics, 18(2), 553–575. doi:10.1515/ijb-2020-0104\nMa J, Webb A, Hudson HM (2024). Likelihood Methods in Survival Analysis: With R Examples. Chapman and Hall/CRC."
+  },
+  {
+    "objectID": "talks/2025-10-group-meeting-r-dev-day/index.html",
+    "href": "talks/2025-10-group-meeting-r-dev-day/index.html",
+    "title": "Contributing to base R: notes from R Dev Day",
+    "section": "",
+    "text": "Talk · Group meeting, MRC Biostatistics Unit\n\n\nSlides (PDF) R Dev Day issue #27\n\nA session at our group meeting about my day at the R Dev Day held alongside RSECon25. R Dev Days are short events, usually one day, where new and experienced contributors work together on contributions to base R, with support from the R Core Team.\nThe session covered:\n\nhow the day is organised: a shared list of open issues on documentation, translation, I/O and low-level code, each with a facilitator and contributors;\nthe issue I worked on, #27, reported by Henrik Bengtsson. In R a connection is identified by a small integer that gets reused, so after close(con1) a new connection can take the same number and con1 silently points to it. Writing to con1 then writes to the wrong file. Every connection also has a unique internal id, visible through the conn_id attribute, and that is what can tell the two apart;\nVS Code Live Share, which lets several people edit and debug the same code at once from their own machines."
+  },
+  {
+    "objectID": "talks/2025-02-admtp-mams/index.html",
+    "href": "talks/2025-02-admtp-mams/index.html",
+    "title": "Improving implementation of adaptive multi-arm multi-stage trials: the MAMS R package",
+    "section": "",
+    "text": "Talk · Adaptive Designs and Multiple Testing Procedures workshop (ADMTP) 2025, Regensburg\n\n\nSlides (PDF) Package on CRAN Documentation Workshop programme\n\nN. Mozgunov, D.-L. Couturier, M. Grayling, D. Magirr, P. Pallmann, T. Jaki\nMulti-arm multi-stage trials compare several experimental treatments with a common control, with interim analyses at which arms can stop for futility or efficacy. The gain in efficiency comes with a cost: the multiple testing needed to control the familywise error rate makes these trials harder to design, analyse and implement. This talk was about the implementation side.\nThe first version of MAMS came out in 2012. Version 1.0 (2016) added simulation and more functions, version 2.0 (2022) added parallel computation and moved parts of the code to C, and version 3.0 (September 2024) is the one this talk covered. Until then the package only had simultaneous stopping rules, where the trial stops as soon as one treatment is found effective or all arms are futile. Version 3 adds two designs:\n\ndrop-the-losers, where the arms are ranked at each interim analysis and a fixed number of the weakest are dropped, so the number of arms at each stage is known in advance;\nseparate stopping rules, where each arm is assessed on its own and stopping one arm does not affect the others.\n\nEach design is now a separate module. A module checks the inputs, computes the boundaries and the sample size, runs simulations, and supplies the design-specific print(), summary() and plot() methods. A new design can be added without touching the others, and designs from earlier versions still work.\nIn the live part of the talk I set up a three-stage drop-the-losers design with 4, 2 and 1 arms per stage, power 0.9 and a one-sided familywise error rate of 0.05, then went through its print() and summary() output. The last step showed a new feature: an existing design can be passed back to mams() with only the changed arguments, for example mams(mams_1, power = 0.8), which makes it easy to compare versions of a design.\nThe talk finished with the documentation site, which has tutorials for single-stage and multi-stage designs, operating characteristics and design modifications."
+  },
+  {
+    "objectID": "software.html",
+    "href": "software.html",
+    "title": "Software",
+    "section": "",
+    "text": "Packages and apps I have written or contributed to. Everything is open source."
+  },
+  {
+    "objectID": "software.html#mams",
+    "href": "software.html#mams",
+    "title": "Software",
+    "section": "MAMS",
+    "text": "MAMS\n\nCRAN Documentation Poster (ICTMC 2024, RSS 2025)\n\nDesigns multi-arm multi-stage clinical trials with normal endpoints, and with ordinal, binary and time-to-event endpoints through their asymptotic properties. I am one of the package authors, alongside Thomas Jaki, Dominique-Laurent Couturier, Dominic Magirr and Philip Pallmann. Version 3 added two designs, drop-the-losers and separate stopping rules, next to the original simultaneous stopping rule. I worked on these, on the summary(), print() and plot() methods, on parallel computation through the future framework, and on the pkgdown site with its worked examples."
+  },
+  {
+    "objectID": "software.html#survivalmpl",
+    "href": "software.html#survivalmpl",
+    "title": "Software",
+    "section": "survivalMPL",
+    "text": "survivalMPL\n\nDocumentation ICTMC 2026 poster\n\nCox proportional hazards models fitted by penalised maximum likelihood. It handles exact, right-, left- and interval-censored data and delayed entry in one likelihood, and returns a smooth estimate of the baseline hazard."
+  },
+  {
+    "objectID": "software.html#shinyclt",
+    "href": "software.html#shinyclt",
+    "title": "Software",
+    "section": "shinyCLT",
+    "text": "shinyCLT\n\nCRAN GitHub\n\nA Shiny app for teaching the central limit theorem and what it means for common tests. You pick the distribution, the sample size and the location and nuisance parameters for one or two groups, and the app uses Monte Carlo simulation to show how the sample means behave and how Student’s t-test, Welch’s t-test and the Wilcoxon test perform in that setting. I wrote it with Dominique-Laurent Couturier and Thomas Jaki, and we use it in our teaching.\ninstall.packages(\"shinyCLT\")\nshinyCLT::CLT()"
+  },
+  {
+    "objectID": "software.html#onlinefdr",
+    "href": "software.html#onlinefdr",
+    "title": "Software",
+    "section": "onlineFDR",
+    "text": "onlineFDR\n\nBioconductor Documentation\n\nBioconductor package for controlling the false discovery rate when hypotheses are tested one after another. In 2025 I fixed a numerical precision problem that made results differ on macOS and helped prepare the package for a new Bioconductor submission."
+  },
+  {
+    "objectID": "software.html#pkgassistr",
+    "href": "software.html#pkgassistr",
+    "title": "Software",
+    "section": "pkgassistR",
+    "text": "pkgassistR\n\nProposal Proposal source Demo app Blog post\n\nA proposal to the R Consortium Infrastructure Steering Committee for a Shiny framework that answers questions about a specific R package in plain language. Answers are built from the package’s own help pages, vignettes and examples, and each one cites the material it used. MAMS is the first test case, with survivalMPL and onlineFDR as checks that the design is not tied to one package.\nThe demo runs entirely on a local machine: it indexes the MAMS source from CRAN, builds embeddings with Ollama, and answers questions in a Shiny app that shows the retrieved chunks next to each answer."
+  },
+  {
+    "objectID": "software.html#setwidth2",
+    "href": "software.html#setwidth2",
+    "title": "Software",
+    "section": "setwidth2",
+    "text": "setwidth2\n\nGitHub\n\nKeeps options(\"width\") in step with the size of the terminal window, so printed output wraps correctly after you resize it. It is based on setwidth by Jakson Alves de Aquino, which only worked on Unix-like systems; setwidth2 also works on Windows and macOS.\nremotes::install_github(\"nikotinz/setwidth2\")"
+  },
+  {
+    "objectID": "software.html#liftsreview",
+    "href": "software.html#liftsreview",
+    "title": "Software",
+    "section": "LiftsReview",
+    "text": "LiftsReview\n\nApp GitHub\n\nA side project. Enter your squat, bench press and deadlift, and the Shiny app shows where they fall among results from International Powerlifting Federation competitions."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "GeoData",
+    "title": "Nikita Mozgunov",
     "section": "",
-    "text": "Общие показатели межстранового сравнения\n\n\n\n\n\n\nМировое хозяйство\n\n\n\nОбщие показатели экономического развития стран мира.\n\n\n\n\n\nJan 18, 2024\n\n\n\n\n\n\n\n\n\n\n\n\nПВС регионов РФ 2022\n\n\n\n\n\n\nДемография\n\n\n\n\n\n\n\n\n\nAug 6, 2022\n\n\n\n\n\n\n\n\n\n\n\n\nПВС регионов РФ 2021\n\n\n\n\n\n\nДемография\n\n\n\n\n\n\n\n\n\nNov 1, 2021\n\n\n\n\n\n\n\n\n\n\n\n\nПВС регионов РФ 1989\n\n\n\n\n\n\nДемография\n\n\n\n\n\n\n\n\n\nOct 30, 2021\n\n\n\n\n\n\nNo matching items"
+    "text": "I am a research associate at the MRC Biostatistics Unit, University of Cambridge. I write and maintain R packages for clinical trial methods. At the moment that means MAMS, for designing multi-arm multi-stage trials, and survivalMPL, which fits Cox models to interval-censored data by penalised likelihood. I also build the documentation sites for these packages, help teach two courses on Cambridge MPhil programmes and give short talks on R to colleagues at the unit.\nBefore Cambridge I spent more than ten years at Lomonosov Moscow State University. I did a PhD in economic geography there and stayed on as a research fellow, working on transport emissions, population ageing and rural settlement in Russia. I taught undergraduate and postgraduate students at the university, and worked with advanced school students through the All-Russian Geography Olympiad, where I also wrote the tasks. Alongside the academic work I had jobs in industry as a system administrator and network engineer, and that is where I picked up the practical IT skills I now use to build statistical software.\nThis site collects my talks, posters, software and notes."
   },
   {
-    "objectID": "posts/PVS_2022/PVS_2022.html",
-    "href": "posts/PVS_2022/PVS_2022.html",
-    "title": "ПВС регионов РФ 2022",
+    "objectID": "index.html#recent",
+    "href": "index.html#recent",
+    "title": "Nikita Mozgunov",
+    "section": "Recent",
+    "text": "Recent\n\n\n\n\n\n\nDate\n\n\n\nTitle\n\n\n\n\n\n\n\n\nOct 2026\n\n\nLLMs in research, using R\n\n\n\n\n\n\nSep 2026\n\n\nPenalised maximum likelihood for interval-censored survival data: the survivalMPL R package\n\n\n\n\n\n\nJul 2026\n\n\nRetrieval-augmented everything: a RAG assistant for an R package\n\n\n\n\n\n\nNov 2025\n\n\nRunning R on Amazon EC2\n\n\n\n\n\n\nOct 2025\n\n\nContributing to base R: notes from R Dev Day\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "blog/2026-10-mphil-llms-in-research/index.html",
+    "href": "blog/2026-10-mphil-llms-in-research/index.html",
+    "title": "LLMs in research, using R",
     "section": "",
-    "text": "Половозрастная структура населения регионов РФ на 1 января 2022 года.\nСоставлено по данным: https://rosstat.gov.ru/storage/mediabank/Bul_chislen_nasel-pv_01-01-2022.pdf"
+    "text": "Based on a lecture I gave in October 2026 in the Data Analysis course of the MPhil in Medical Devices and Advanced Therapies at the University of Cambridge. Slides (PDF)\nI work at the MRC Biostatistics Unit, where I build clinical trial design software in R and Shiny, and I use LLMs every day. That is exactly why this talk is cautious rather than enthusiastic. My aim was that by the end, students could pick a tool that does more than copy and paste into a web chat, keep trial data away from it, recognise an analysis that looks right but is not, and use LLMs in a way that builds their statistical judgement instead of replacing it.\nA disclaimer first. None of this is an instruction. Nobody on the course has to use AI or pay for an account. The first practical question is simply what you already have: most universities give students some access through their institutional accounts, for example Gemini through a university Google account, or Microsoft Copilot. Find out what yours is, and use that."
   },
   {
-    "objectID": "posts/GDP_2023/GDP_2023.html",
-    "href": "posts/GDP_2023/GDP_2023.html",
-    "title": "Общие показатели межстранового сравнения",
+    "objectID": "blog/2026-10-mphil-llms-in-research/index.html#what-is-an-llm",
+    "href": "blog/2026-10-mphil-llms-in-research/index.html#what-is-an-llm",
+    "title": "LLMs in research, using R",
+    "section": "What is an LLM?",
+    "text": "What is an LLM?\nA large language model is trained on a huge amount of text: books, websites, articles and code. From that text it learns which words usually follow which, and when it answers, it writes the most likely next word, then the next, and so on.\n\n\n\n\n\n\n\nHow an LLM writes an answer, one likely word at a time.\n\n\nTwo things follow. First, the training data are a mix of everything people have written: scientific papers, but also Reddit posts and much else of uneven quality. The companies filter it, but the data sets are enormous and the filtering is hard. Second, an answer is the most likely answer, not necessarily the correct one. Ask what two plus two is and you will get four, because four is by far the most common continuation. For a harder calculation the model may produce a plausible-looking number without calculating anything. The companies try to make models call a calculator in such cases, but from the outside you can’t always tell whether a number was computed or generated."
+  },
+  {
+    "objectID": "blog/2026-10-mphil-llms-in-research/index.html#four-ways-to-put-an-llm-next-to-r",
+    "href": "blog/2026-10-mphil-llms-in-research/index.html#four-ways-to-put-an-llm-next-to-r",
+    "title": "LLMs in research, using R",
+    "section": "Four ways to put an LLM next to R",
+    "text": "Four ways to put an LLM next to R\nLLMs existed well before most of us used them. What changed everything was the chat interface: you ask in plain language and get a plain-language answer, with nothing to install. But the web chat is only one of four ways to use these models with R, and the others give the model more context.\n\n\n\n\n\n\n\n\n\n\n\nWeb chat\nIDE assistant\nCoding agent\nR packages\n\n\n\n\nExamples\nChatGPT, Claude, Gemini, Copilot\nPosit Assistant (RStudio, Positron), GitHub Copilot\nClaude Code, OpenAI Codex, Google Antigravity\nellmer, btw, mcptools\n\n\nWhat it sees\nOnly what you paste\nOpen files; with Posit, your live R session\nThe whole project folder, and it runs commands\nExactly what your code sends it\n\n\nGood for\nConcepts, error messages, a second opinion\nInline edits, explaining code in place\nRefactoring, tests, packages, Shiny apps\nLLM steps inside a reproducible pipeline\n\n\n\nMost students stop at the first column: copy code into a web chat and copy the answer back. That works for concepts and error messages, but the model sees only what you paste, and there is a limit on how much you can paste. You can’t give it a whole dissertation. It also has no idea what your data or R session look like, so it guesses, and you are tempted to paste data to help it. Moving to the right, the model gets more context and more freedom to act. That makes it more useful, and it means there is more to check.\n\nIDE assistant\nRStudio now has an assistant built in. In the lecture I opened it and asked it, in plain English, to load the films data set from the previous practical and make a subset with only the highly rated films, the same task the students had done by hand. I did not say where the file was or which column held the rating. Because the assistant can see the working directory and the R session, it found the file, explored the data, worked out which column to use, and ran the code itself.\n\n\n\n\n\n\n\nChoosing a model provider for Posit Assistant in RStudio.\n\n\n\n\nCoding agents\nA coding agent goes a step further. It reads your project, makes a plan, edits files, runs commands, including Rscript, reads the output and tries again. You talk to it in plain language, as in a chat, but it can also create and analyse files in any folder you give it access to. For some researchers this has changed how they work.\n\n\n\n\n\n\n\n\n\nTool\nWhere it runs\nHow it works\nGuardrails to set\n\n\n\n\nClaude Code (Anthropic)\nTerminal, desktop app, IDE extensions\nReads the repo, edits files, runs R and shell commands; follows CLAUDE.md\nPermission modes, deny rules for paths, sandbox\n\n\nOpenAI Codex\nCommand line, IDE, desktop app, cloud\nThe same loop; follows AGENTS.md\nSandbox (read-only or workspace-write), approval policy\n\n\nGoogle Antigravity\nDesktop app and command line\nRuns several agents in parallel; built-in browser\nReview the agents’ plans before they act; the newest and least mature\n\n\n\n\n\n\n\n\n\n\nAntigravity CLI running inside a JetBrains IDE. Screenshot from the Antigravity CLI Companion plugin page, JetBrains Marketplace.\n\n\nThe names will change; by next year the front-runners may be different. What they share is more important. Each has a plain-text rules file for the project (CLAUDE.md, AGENTS.md) where you can write things like the treatment arm is a factor, never print rows of data, use the synthetic data in data-synth/. Write those rules. And remember: anything the agent can run, it can see the output of.\n\n\nR packages: the LLM as a function\nThe fourth option is different in kind. With ellmer, the LLM becomes one step in a script you control. You decide exactly what is sent, and you get the result back as an R object.\nlibrary(ellmer)\n\nchat &lt;- chat_anthropic()  # or chat_openai(), ...\nchat$chat(\"Explain nAGQ in lme4::glmer in two lines\")\n\n# Free text -&gt; typed R columns\nae &lt;- type_object(\n  term    = type_string(\"Adverse event term\"),\n  serious = type_boolean()\n)\n\n# Sensitive text: keep it on your machine\nlocal &lt;- chat_ollama(model = \"llama3.2\")\nlocal$chat_structured(narrative, type = ae)\nThe second block is structured output: you define a type, and the model’s answer comes back as typed columns, here a term and a seriousness flag coded from a free-text adverse event description. Treat that like any other measurement instrument and check it against a sample you coded by hand before you trust it. Adverse event narratives are patient data, so the last block sends them to a local model through Ollama instead of a cloud service. Local models are smaller and weaker, but nothing leaves your machine. One more habit: record the model name and version with your results, because the same prompt next month may give a different answer."
+  },
+  {
+    "objectID": "blog/2026-10-mphil-llms-in-research/index.html#give-the-agent-the-least-access-it-needs",
+    "href": "blog/2026-10-mphil-llms-in-research/index.html#give-the-agent-the-least-access-it-needs",
+    "title": "LLMs in research, using R",
+    "section": "Give the agent the least access it needs",
+    "text": "Give the agent the least access it needs\nAgents are powerful, and they have access to your working directory. Sometimes they reach outside it. The safest set-up is one where there is nothing to leak.\n\nKeep the real data outside the agent’s folder. The project holds your code and a synthetic twin of the data: the same variable names, types and coding, with fake values. You can simulate it in a few lines, or use a package such as synthpop.\nDeny what the agent does not need. In Claude Code, add deny rules to .claude/settings.json for the data folder and for .Renviron, where API keys live:\n{ \"permissions\": { \"deny\": [\n    \"Read(./data/**)\", \"Read(**/.Renviron)\" ] } }\nIn Codex, start without write access:\ncodex --sandbox read-only --ask-for-approval on-request\nApprove commands one at a time until you trust the set-up.\n\nThese settings are easy to over-trust. Codex’s read-only mode stops the agent writing files, not reading them. Claude Code’s deny rules apply to its own file tools and to shell commands it recognises, not to an R script that opens the file itself. And if the agent can run code, it sees the output: one print(head(df)) and real rows are in the conversation. That is why the first step matters most."
+  },
+  {
+    "objectID": "blog/2026-10-mphil-llms-in-research/index.html#what-could-happen",
+    "href": "blog/2026-10-mphil-llms-in-research/index.html#what-could-happen",
+    "title": "LLMs in research, using R",
+    "section": "What could happen",
+    "text": "What could happen\nTwo real examples. In one, posted on Reddit, Claude Code ran a chained command that deleted a disk volume and reported: “I need to be transparent. There’s a problem – I made a serious mistake.” 202 GB of work was gone. Imagine getting that message a month before your viva.\n\n\n\n\n\n\n\nClaude Code reporting that 202 GB of data had been deleted. Screenshot from a post on r/ClaudeCode, Reddit.\n\n\nIn the other, reported by Tom’s Hardware, the founder of PocketOS, a software platform for car rental businesses, summed it up:\n\n“Yesterday afternoon, an AI coding agent — Cursor running Anthropic’s flagship Claude Opus 4.6 — deleted our production database and all volume-level backups in a single API call to Railway, our infrastructure provider. It took 9 seconds.”\n\nNine seconds to lose everything. Be careful with powerful tools."
+  },
+  {
+    "objectID": "blog/2026-10-mphil-llms-in-research/index.html#an-analysis-that-looks-right-but-is-wrong",
+    "href": "blog/2026-10-mphil-llms-in-research/index.html#an-analysis-that-looks-right-but-is-wrong",
+    "title": "LLMs in research, using R",
+    "section": "An analysis that looks right but is wrong",
+    "text": "An analysis that looks right but is wrong\nThe more common risk is quieter. Here is a simple three-arm trial: placebo, drug A and drug B, 100 patients per arm, and the outcome is the change in systolic blood pressure at 12 weeks. We ask an LLM to “analyse the outcome by arm”. So far the practice is good: the LLM never sees the data. It writes code, we run it, and it writes up the result:\n\n“There is no evidence that treatment affected systolic blood pressure (β = −1.0 mmHg, 95% CI −3.1 to 1.1; p = 0.35).”\n\nThe problem is that arm was stored as 1, 2 and 3. R treated it as a number and fitted one straight line through three unrelated drugs, as if drug B were “twice as much” drug A. It is the same thing students met earlier in the course with the number of cylinders in mtcars, which has to be a factor before the analysis makes sense.\n\n\n\n\n\n\n\nThe LLM’s straight line (dashed orange) against the actual arm means with 95% confidence intervals (blue).\n\n\nA straight line through a V shape averages the effect away. One line of code fixes it:\ntrial$arm &lt;- factor(trial$arm, labels = c(\"Placebo\", \"Drug A\", \"Drug B\"))\n\n\n\nvs placebo\nDifference, mmHg (95% CI)\np\n\n\n\n\nDrug A\n−7.0 (−11.2 to −2.8)\n0.001\n\n\nDrug B\n−2.0 (−6.2 to 2.2)\n0.35\n\n\n\nDrug A works, and the LLM’s model could not see it. Note what did not happen: no error and no warning. The code is valid R. It is just the wrong model. In a real multi-arm trial you would also pre-specify how to handle multiple comparisons against the shared control, for example with Dunnett’s test, and drug A would survive that easily."
+  },
+  {
+    "objectID": "blog/2026-10-mphil-llms-in-research/index.html#six-patterns-that-beat-vibe-coding",
+    "href": "blog/2026-10-mphil-llms-in-research/index.html#six-patterns-that-beat-vibe-coding",
+    "title": "LLMs in research, using R",
+    "section": "Six patterns that beat vibe coding",
+    "text": "Six patterns that beat vibe coding\nVibe coding means describing what you want, accepting whatever runs and moving on. Almost anyone can now produce code that runs and a result that looks like what they expected. That is fine for a throwaway plot. It is not fine for an analysis someone will base a decision on, because you don’t know whether the result can be trusted. Instead:\n\nSpec first. Write the estimand and the analysis plan yourself, before the LLM is involved, the same way you fix the null and alternative hypotheses before seeing the data. The LLM then implements your plan instead of guessing one.\nExplain before run. Ask for its plan and assumptions before any code. If you are learning, ask for hints, not answers.\nSimulate the truth. Plant a known effect in synthetic data. Code that cannot recover it is wrong. The three-arm example fails this test immediately.\nTests as the contract. A few testthat checks, for the number per arm, the factor levels and a known answer, define when the work is done.\nSecond opinion. Statisticians have always checked new work this way: someone else solves the same problem independently, or you solve it a second way. A fresh session, with no memory of the first, or a different model can play that role. Ask it what assumptions the analysis makes, not whether it is right.\nConstrain the choice. Let the LLM pick from a list of methods you chose, and generate the code from templates. Less creative, much easier to check."
+  },
+  {
+    "objectID": "blog/2026-10-mphil-llms-in-research/index.html#dont-outsource-the-learning",
+    "href": "blog/2026-10-mphil-llms-in-research/index.html#dont-outsource-the-learning",
+    "title": "LLMs in research, using R",
+    "section": "Don’t outsource the learning",
+    "text": "Don’t outsource the learning\nThe best evidence so far comes from a field experiment with about a thousand high-school maths students (Bastani et al., 2025). During practice sessions, students had either no AI, a standard ChatGPT-style interface (GPT Base), or a GPT-4 tutor with safeguards designed by teachers that gave hints instead of answers (GPT Tutor).\nDuring practice, both AI groups did much better than the control group: GPT Base by 48% and GPT Tutor by 127%. Then the AI was taken away for the exam. GPT Base students scored 17% lower than students who never had AI. GPT Tutor students showed no significant drop.\nIt is a different setting from an MPhil, but the mechanism, using the tool as a crutch, carries over. On the course, as in that exam, the AI will be removed at some point. Ways to use it that build skill:\n\ntry first, then ask it to explain;\nask for hints, not answers;\nhave it quiz you or set practice problems;\nget feedback on an interpretation you wrote yourself.\n\nWays that quietly replace skill:\n\nletting it choose the model you are meant to learn to choose;\nreading its interpretation before writing your own;\nusing it instead of your trial statistician;\nanything your assessment does not permit.\n\nIf you couldn’t do it without the LLM, you are not ready to delegate it."
+  },
+  {
+    "objectID": "blog/2026-10-mphil-llms-in-research/index.html#where-llms-are-useful",
+    "href": "blog/2026-10-mphil-llms-in-research/index.html#where-llms-are-useful",
+    "title": "LLMs in research, using R",
+    "section": "Where LLMs are useful",
+    "text": "Where LLMs are useful\nNone of this means “don’t use them”. I use them a lot in my own R and Shiny work. The useful question is not whether to use an LLM, but whether you can check the answer.\n\nGood fit, quick to check: explaining an error message, explaining unfamiliar code, writing tests and documentation, translating SAS or Stata to R, simulating data to test an analysis. An error explanation either fixes the error or it doesn’t, and translated code gives the same numbers as the original or it doesn’t. Before these tools, an unclear R error could cost hours.\nUse with care, needs expertise to check: suggesting candidate models, listing a model’s assumptions, drafting a methods paragraph, reviewing your code. A suggested model can be wrong in ways a beginner won’t spot, and a model asked only to check your code will sometimes rewrite it the way it likes.\nKeep it yours: choosing the estimand, picking the primary analysis, anything with participant data, and the final interpretation. Never put participant data into a public LLM. Depending on the data and the agreement, that can cost someone their job or break the law. The text and the conclusions of your work should be yours.\n\nThe rule of thumb: use it where checking is faster than doing. Which means that the more statistics you know, the more useful the tool becomes."
+  },
+  {
+    "objectID": "blog/2026-10-mphil-llms-in-research/index.html#from-the-discussion",
+    "href": "blog/2026-10-mphil-llms-in-research/index.html#from-the-discussion",
+    "title": "LLMs in research, using R",
+    "section": "From the discussion",
+    "text": "From the discussion\nWhat about sensitive data? When a service is free, you are often the product, and what you give it is your questions, your data and your ideas. Use the tools the university provides under its contracts, and be especially careful with patient data, which must stay within the rules that apply to it. One way out is to run models locally. The NHS, for example, has access to the data but needs to keep it inside its own infrastructure, so local models are an option there, and running good models on ordinary infrastructure instead of huge data centres is likely to become more common."
+  },
+  {
+    "objectID": "blog/2026-10-mphil-llms-in-research/index.html#references",
+    "href": "blog/2026-10-mphil-llms-in-research/index.html#references",
+    "title": "LLMs in research, using R",
+    "section": "References",
+    "text": "References\nBastani H, Bastani O, Sungu A, Ge H, Kabakcı Ö, Mariman R (2025). Generative AI without guardrails can harm learning: evidence from high school mathematics. Proceedings of the National Academy of Sciences, 122(26), e2422633122. doi:10.1073/pnas.2422633122\n“Claude Code deleted my entire 202GB archive after…” r/ClaudeCode, Reddit. reddit.com\nTyson M (2026). Claude-powered AI coding agent deletes entire company database in 9 seconds. Tom’s Hardware, 27 April 2026. tomshardware.com\nAntigravity CLI Companion, JetBrains Marketplace. plugins.jetbrains.com"
+  },
+  {
+    "objectID": "blog/2025-07-group-meeting-debugging/index.html",
+    "href": "blog/2025-07-group-meeting-debugging/index.html",
+    "title": "Debugging in R",
     "section": "",
-    "text": "ВВП представляет собой сумму валовой добавленной стоимости всех производителей-резидентов в экономике плюс любые налоги на продукты и минус любые субсидии, не включенные в стоимость продуктов. Показатель рассчитывается без вычетов на амортизацию произведенных активов или истощение и деградацию природных ресурсов. Данные указаны в текущих долларах США. Долларовые показатели ВВП пересчитываются из национальной валюты с использованием официальных обменных курсов за один год. Для нескольких стран, где официальный обменный курс не отражает курс, фактически применяемый к фактическим валютным операциям, используется альтернативный коэффициент пересчета."
+    "text": "I prepared this for an R session at our group meeting at the MRC Biostatistics Unit. It was first published on the group’s website."
   },
   {
-    "objectID": "posts/GDP_2023/GDP_2023.html#ввп",
-    "href": "posts/GDP_2023/GDP_2023.html#ввп",
-    "title": "Общие показатели межстранового сравнения",
+    "objectID": "blog/2025-07-group-meeting-debugging/index.html#introduction",
+    "href": "blog/2025-07-group-meeting-debugging/index.html#introduction",
+    "title": "Debugging in R",
+    "section": "Introduction",
+    "text": "Introduction\nDebugging is essential in programming for identifying and resolving errors effectively. Good debugging skills enhance productivity and ensure code reliability.\nTopics Covered:\n\nbrowser()\ndebugonce()\ntraceback()\nrecover()\nDebugging Shiny applications"
+  },
+  {
+    "objectID": "blog/2025-07-group-meeting-debugging/index.html#the-browser-function",
+    "href": "blog/2025-07-group-meeting-debugging/index.html#the-browser-function",
+    "title": "Debugging in R",
+    "section": "The browser() Function",
+    "text": "The browser() Function\nPurpose: Pauses execution, allowing interactive inspection.\nExample:\n\nmy_function &lt;- function(x) {\n    y &lt;- x + 10\n    browser()\n    z &lt;- y / 2\n    return(z)\n}\n\nmy_function(5)\n\nHow to use:\n\nInspect variables directly.\nStep through code (n for next, c to continue)."
+  },
+  {
+    "objectID": "blog/2025-07-group-meeting-debugging/index.html#the-debugonce-function",
+    "href": "blog/2025-07-group-meeting-debugging/index.html#the-debugonce-function",
+    "title": "Debugging in R",
+    "section": "The debugonce() Function",
+    "text": "The debugonce() Function\nPurpose: Debugs a function exactly once.\nExample:\n\nadd_numbers &lt;- function(a, b) {\n    sum &lt;- a + b\n    return(sum)\n}\n\ndebugonce(add_numbers)\n\nadd_numbers(3, \"two\")\n\nHow to use:\n\nAutomatically enters debug mode at next call.\nUseful for inspecting unexpected errors inside functions."
+  },
+  {
+    "objectID": "blog/2025-07-group-meeting-debugging/index.html#the-traceback-function",
+    "href": "blog/2025-07-group-meeting-debugging/index.html#the-traceback-function",
+    "title": "Debugging in R",
+    "section": "The traceback() Function",
+    "text": "The traceback() Function\nPurpose: Identifies the call sequence leading to an error.\nExample:\n\nfunc_a &lt;- function() { func_b() }\nfunc_b &lt;- function() { stop(\"An error occurred!\") }\n\nfunc_a()\ntraceback()\n\nHow to use:\n\nQuickly identifies problematic calls.\nIdeal for debugging nested functions."
+  },
+  {
+    "objectID": "blog/2025-07-group-meeting-debugging/index.html#the-recover-function",
+    "href": "blog/2025-07-group-meeting-debugging/index.html#the-recover-function",
+    "title": "Debugging in R",
+    "section": "The recover() Function",
+    "text": "The recover() Function\nPurpose: Interactive debugging at the moment an error occurs.\nSet this first:\n\noptions(error = recover)\n\nf1 &lt;- function(x) { f2(x) }\nf2 &lt;- function(x) { f3(x) }\nf3 &lt;- function(x) { stop(\"Unexpected error!\") }\n\nf1(10)\n\nHow to use:\n\nProvides menu to enter error environments.\nInspect variables interactively."
+  },
+  {
+    "objectID": "blog/2025-07-group-meeting-debugging/index.html#debugging-shiny-applications",
+    "href": "blog/2025-07-group-meeting-debugging/index.html#debugging-shiny-applications",
+    "title": "Debugging in R",
+    "section": "Debugging Shiny Applications",
+    "text": "Debugging Shiny Applications\nDebugging Shiny can be challenging. Key approaches include:\n\nUse browser() in reactive contexts:\n\n\nlibrary(shiny)\n\nui &lt;- fluidPage(\n    numericInput(\"num\", \"Number:\", 10),\n    textOutput(\"result\")\n)\n\nserver &lt;- function(input, output) {\n    output$result &lt;- renderText({\n        browser()\n        paste(\"Double:\", input$num * 2)\n    })\n}\n\nshinyApp(ui, server)\n\n\nMonitor logs and console outputs."
+  },
+  {
+    "objectID": "blog/2025-07-group-meeting-debugging/index.html#summary-key-takeaways",
+    "href": "blog/2025-07-group-meeting-debugging/index.html#summary-key-takeaways",
+    "title": "Debugging in R",
+    "section": "Summary: Key Takeaways",
+    "text": "Summary: Key Takeaways\n\nbrowser() - Interactive inspection.\ndebugonce() - Single-use debugging.\ntraceback() - Error call sequence.\nrecover() - Interactive error handling.\nShiny apps - Combine browser(), logging, and output checks.\n\nEffective debugging greatly enhances coding efficiency and reliability."
+  },
+  {
+    "objectID": "blog/2025-07-group-meeting-debugging/index.html#references",
+    "href": "blog/2025-07-group-meeting-debugging/index.html#references",
+    "title": "Debugging in R",
+    "section": "References",
+    "text": "References\n\nR Debugging manual – CRAN\nAdvanced R: Debugging R code\nRStudio: Debugging tools\nShiny – Debugging guide"
+  },
+  {
+    "objectID": "blog/2024-08-group-meeting-computational-tasks/index.html",
+    "href": "blog/2024-08-group-meeting-computational-tasks/index.html",
+    "title": "Running computational tasks in R",
     "section": "",
-    "text": "ВВП представляет собой сумму валовой добавленной стоимости всех производителей-резидентов в экономике плюс любые налоги на продукты и минус любые субсидии, не включенные в стоимость продуктов. Показатель рассчитывается без вычетов на амортизацию произведенных активов или истощение и деградацию природных ресурсов. Данные указаны в текущих долларах США. Долларовые показатели ВВП пересчитываются из национальной валюты с использованием официальных обменных курсов за один год. Для нескольких стран, где официальный обменный курс не отражает курс, фактически применяемый к фактическим валютным операциям, используется альтернативный коэффициент пересчета."
+    "text": "I prepared this for an R session at our group meeting at the MRC Biostatistics Unit. It was first published on the group’s website."
   },
   {
-    "objectID": "posts/GDP_2023/GDP_2023.html#прирост-ввп-годовой",
-    "href": "posts/GDP_2023/GDP_2023.html#прирост-ввп-годовой",
-    "title": "Общие показатели межстранового сравнения",
-    "section": "Прирост ВВП (годовой %)",
-    "text": "Прирост ВВП (годовой %)\nГодовой процентный темп роста ВВП в рыночных ценах на основе неизменной местной валюты. Данные основаны на постоянных ценах 2015 года, выраженных в долларах США. ВВП представляет собой сумму валовой добавленной стоимости всех производителей-резидентов в экономике плюс любые налоги на продукты и минус любые субсидии, не включенные в стоимость продуктов. Он рассчитывается без вычетов на амортизацию произведенных активов или истощение и деградацию природных ресурсов."
+    "objectID": "blog/2024-08-group-meeting-computational-tasks/index.html#motivation",
+    "href": "blog/2024-08-group-meeting-computational-tasks/index.html#motivation",
+    "title": "Running computational tasks in R",
+    "section": "Motivation",
+    "text": "Motivation\nRunning computationally expensive tasks in R can be challenging, especially when working with large datasets and intensive calculations. This post provides practical tips for efficiently handling background jobs, optimising performance, debugging, and parallelisation."
   },
   {
-    "objectID": "posts/GDP_2023/GDP_2023.html#ввп-на-душу-населения-ппс-в-текущих-международных-долларах",
-    "href": "posts/GDP_2023/GDP_2023.html#ввп-на-душу-населения-ппс-в-текущих-международных-долларах",
-    "title": "Общие показатели межстранового сравнения",
-    "section": "ВВП на душу населения, ППС (в текущих международных долларах)",
-    "text": "ВВП на душу населения, ППС (в текущих международных долларах)\nЭтот показатель предоставляет значения валового внутреннего продукта (ВВП) на душу населения, выраженные в текущих международных долларах, преобразованные с использованием коэффициента пересчета паритета покупательной способности (ППС). ВВП представляет собой сумму валовой добавленной стоимости всех производителей-резидентов в стране плюс любые налоги на продукцию и минус любые субсидии, не включенные в стоимость продукции. Коэффициент пересчета представляет собой пространственный дефлятор цен и конвертер валют, который учитывает разницу в уровне цен между странами. Общая численность населения представляет собой среднегодовую численность населения, основанную на фактическом определении населения, т.е. включает всех жителей, независимо от правового статуса или гражданства.\n\n\n\n\n\n  \n    \n    \n    \n    \n    \n    \n    \n    \n    \n    \n    \n    \n  \n  \n    \n      Общие показатели экономического развития\n    \n    \n    \n      Ранг\n      Страна2\n      Население3\n      \n        ВВП1\n      \n      \n        Прирост ВВП, %\n      \n      \n        ВВП по ППС1\n      \n    \n    \n      2020\n      2021\n      2022\n      2020\n      2021\n      2022\n      2020\n      2021\n      2022\n    \n  \n  \n    1\nСША\n333.3\n21060\n23315\n25440\n-2.8\n5.9\n1.9\n63528.6\n70219.5\n76329.6\n    2\nКитай\n1412.2\n14688\n17820\n17963\n2.2\n8.4\n3.0\n17209.4\n19484.5\n21482.6\n    3\nЯпония\n125.1\n5049\n5006\n4232\n-4.3\n2.1\n1.0\n41683.9\n42833.9\n45583.8\n    4\nГермания\n83.8\n3888\n4279\n4082\n-3.8\n3.2\n1.8\n56454.3\n59055.2\n63521.9\n    5\nИндия\n1417.2\n2672\n3150\n3417\n-5.8\n9.1\n7.2\n6517.8\n7368.0\n8400.4\n    6\nВеликобритания\n67.0\n2698\n3142\n3089\n-10.4\n8.7\n4.3\n45756.7\n50361.3\n54929.8\n    7\nФранция\n68.0\n2647\n2959\n2779\n-7.5\n6.4\n2.5\n48288.4\n51378.2\n55387.5\n    8\nРоссия\n144.2\n1493\n1837\n2240\n-2.7\n5.6\n-2.1\n30011.6\n33878.1\n36307.8\n    9\nКанада\n38.9\n1648\n2001\n2138\n-5.1\n5.0\n3.4\n47226.4\n53023.4\n58347.7\n    10\nИталия\n58.9\n1897\n2155\n2050\n-9.0\n8.3\n3.7\n43150.1\n47591.9\n52804.0\n    11\nБразилия\n215.3\n1476\n1650\n1920\n-3.3\n5.0\n2.9\n14900.1\n16260.1\n17827.6\n    12\nАвстралия\n26.0\n1330\n1559\n1693\n-0.3\n2.1\n4.3\n53216.5\n56181.0\n63216.1\n    13\nКорея\n51.6\n1644\n1818\n1674\n-0.7\n4.3\n2.6\n44694.7\n47068.5\n50330.5\n    14\nМексика\n127.5\n1121\n1313\n1466\n-8.7\n5.8\n3.9\n19035.4\n20189.3\n22298.2\n    15\nИспания\n47.8\n1278\n1446\n1418\n-11.2\n6.4\n5.8\n38022.7\n41182.5\n46331.7\n    16\nИндонезия\n275.5\n1059\n1187\n1319\n-2.1\n3.7\n5.3\n12160.7\n13086.4\n14657.8\n    17\nСаудовская Аравия\n36.4\n734\n874\n1109\n-4.3\n4.3\n8.7\n47278.7\n51607.0\n59279.9\n    18\nНидерланды\n17.7\n910\n1030\n1009\n-3.9\n6.2\n4.3\n59823.0\n64488.8\n70869.4\n    19\nТурция\n85.0\n720\n820\n907\n1.9\n11.4\n5.5\n27975.9\n30710.5\n37445.2\n    20\nШвейцария\n8.8\n742\n813\n818\n-2.1\n5.4\n2.6\n71010.4\n77181.4\n84649.9\n    21\nПольша\n36.8\n599\n681\n688\n-2.0\n6.9\n5.3\n35315.7\n38241.7\n44134.6\n    22\nКуба\n11.2\n107\n545\n633\n-10.9\n1.3\n1.8\nNA\nNA\nNA\n    23\nАргентина\n46.2\n386\n488\n631\n-9.9\n10.7\n5.0\n20797.7\n23834.5\n26530.3\n    24\nШвеция\n10.5\n547\n640\n591\n-2.2\n6.1\n2.8\n56140.6\n60396.7\n65157.0\n    25\nБельгия\n11.7\n526\n601\n583\n-5.3\n6.9\n3.0\n54679.1\n59508.7\n65478.4\n    26\nНорвегия\n5.5\n368\n490\n579\n-1.3\n3.9\n3.3\n65130.2\n81866.8\n114929.5\n    27\nИрландия\n5.1\n429\n513\n533\n6.6\n15.1\n9.4\n94550.7\n108517.0\n126837.3\n    28\nИзраиль\n9.6\n413\n489\n525\n-1.9\n8.6\n6.8\n40219.3\n44033.1\n49754.8\n    29\nОАЭ\n9.4\n349\n415\n507\n-5.0\n4.4\n7.9\n71458.6\n77273.0\n88489.0\n    30\nТаиланд\n71.7\n500\n506\n495\n-6.1\n1.5\n2.6\n17810.3\n18855.0\n20679.1\n    31\nЕгипет\n111.0\n384\n425\n477\n3.6\n3.3\n6.6\n12661.2\n13440.6\n15096.0\n    32\nНигерия\n218.5\n432\n441\n473\n-1.8\n3.6\n3.3\n5137.6\n5431.9\n5862.2\n    33\nАвстрия\n9.0\n435\n479\n471\n-6.6\n4.2\n4.8\n57235.5\n59828.9\n67874.9\n    34\nСингапур\n5.6\n348\n424\n467\n-3.9\n8.9\n3.6\n100226.4\n118887.8\n127606.8\n    35\nБангладеш\n171.2\n374\n416\n460\n3.4\n6.9\n7.1\n5904.6\n6522.6\n7397.5\n    36\nИран\n88.6\n240\n359\n413\n3.3\n4.7\n3.8\n15240.8\n16557.0\n18261.8\n    37\nВьетнам\n98.2\n347\n366\n409\n2.9\n2.6\n8.0\n11036.0\n11727.8\n13461.0\n    38\nМалайзия \n33.9\n337\n374\n407\n-5.5\n3.3\n8.7\n27300.3\n29139.4\n33525.3\n    39\nЮАР\n59.9\n338\n420\n405\n-6.0\n4.7\n1.9\n13587.3\n14717.7\n15920.4\n    40\nФилиппины\n115.6\n362\n394\n404\n-9.5\n5.7\n7.6\n8208.7\n8933.1\n10136.6\n  \n  \n    \n      Источники: The World Bank, World Development Indicators (2023).\n    \n  \n  \n    \n       NA - нет данных\n    \n    \n      1 млрд долл.\n    \n    \n      2 Страны отобраны по величине ВВП по ППС за  2022 год. \n    \n    \n      3 Оценка на середину 2022 года, млн чел."
+    "objectID": "blog/2024-08-group-meeting-computational-tasks/index.html#addressing",
+    "href": "blog/2024-08-group-meeting-computational-tasks/index.html#addressing",
+    "title": "Running computational tasks in R",
+    "section": "Addressing",
+    "text": "Addressing\nEfficient execution of computational tasks ensures that R processes run without blocking user interaction, effectively utilising system resources. The pyramid below illustrates the layers of computational efficiency in R programming.\n\n\n\n\n\nSource: Selina Baldauf"
   },
   {
-    "objectID": "posts/PVS_1989/PVS_1989.html",
-    "href": "posts/PVS_1989/PVS_1989.html",
-    "title": "ПВС регионов РФ 1989",
+    "objectID": "blog/2024-08-group-meeting-computational-tasks/index.html#running-background-jobs-in-r",
+    "href": "blog/2024-08-group-meeting-computational-tasks/index.html#running-background-jobs-in-r",
+    "title": "Running computational tasks in R",
+    "section": "Running Background Jobs in R",
+    "text": "Running Background Jobs in R\n\nExample: Running an Iterative Task in the Background\nBackground jobs allow long-running computations** to execute independently, freeing the R console for other tasks.\n\n\nSteps to Run a Background Job in RStudio\n\nOpen RStudio.\nClick on “Jobs” → “Start Job” from the RStudio Environment Pane.\nChoose “Run Script in Background” and select script_name.R.\nMonitor progress in the Jobs Pane.\n\n\n\nlibrary(dplyr)\n\n# Simulate a large dataset\nset.seed(123)\nlarge_data &lt;- data.frame(\n  id = 1:1e6,\n  value = rnorm(1e6)\n)\n\n# Perform some computationally intensive operations\nfor(i in 1:15) {\n  result &lt;- large_data %&gt;%\n    group_by(id %% 10) %&gt;%\n    summarize(mean_value = mean(value))\n  Sys.sleep(2) # Simulate long-running process\n  cat(\"Running\", i, \"iteration.\\n\")\n}\n\ncat(\"Background job completed.\\n\")\n\n\n\n\n\n\n\n\n\n\n\nExplanation:\n\nSys.sleep(2) simulates a time-consuming task.\nEach iteration performs a grouped summary operation.\nRunning this in the background allows users to interact with R without interruption."
+  },
+  {
+    "objectID": "blog/2024-08-group-meeting-computational-tasks/index.html#responsible-use-of-resources",
+    "href": "blog/2024-08-group-meeting-computational-tasks/index.html#responsible-use-of-resources",
+    "title": "Running computational tasks in R",
+    "section": "Responsible Use of Resources",
+    "text": "Responsible Use of Resources\nIt’s crucial to balance computational demand to prevent overloading shared servers.\nExample: Most non-HPC servers allow to run small to medium-sized tasks, so large-scale simulations should be managed carefully.\n\nBest Practice:\n\nUse resource monitoring tools (top, htop) to check CPU usage before launching intensive computations.\nRun long processes inside terminal multiplexers (tmux, screen) to keep jobs running even if the connection is lost.\n\n🔗 Useful Resources\n📖 GNU Screen Documentation\n📖 tmux: Terminal Multiplexer\n📖 Monitoring System Usage in Linux: top command, htop command"
+  },
+  {
+    "objectID": "blog/2024-08-group-meeting-computational-tasks/index.html#profiling-computational-performance",
+    "href": "blog/2024-08-group-meeting-computational-tasks/index.html#profiling-computational-performance",
+    "title": "Running computational tasks in R",
+    "section": "Profiling Computational Performance",
+    "text": "Profiling Computational Performance\nOptimising R code begins with understanding where time and resources are spent. Profiling helps identify bottlenecks - functions or operations that consume excessive computation time. By analysing execution time, memory usage, and function calls, we can make targeted improvements to enhance efficiency.\n\nWhy Profiling Matters?\n\nDetects slow functions that need optimisation.\n\nHighlights redundant computations or excessive loops.\n\nHelps determine whether vectorisation or parallelisation could improve performance.\n\nIdentifies memory-intensive operations that could cause inefficiencies.\n\n\n\nExample: Using profvis() to Analyse Execution Time\nlibrary(profvis)\n\nfunction_1 &lt;- function(size) {\n  large_list &lt;- lapply(1:size, function(x) rnorm(5000))\n  return(large_list)\n}\n\nfunction_2 &lt;- function(iterations) {\n  result &lt;- 0\n  for (i in 1:iterations) {\n    Sys.sleep(0.1) \n    result &lt;- result + i\n  }\n  return(result)\n}\n\nprofvis({\n  function_1(10000)\n  function_2(30)\n})\n\n\nExplanation:\n\nprofvis() visualises where time is spent in an R script.\nHelps identify slow functions and optimise code for better efficiency."
+  },
+  {
+    "objectID": "blog/2024-08-group-meeting-computational-tasks/index.html#debugging-r-code",
+    "href": "blog/2024-08-group-meeting-computational-tasks/index.html#debugging-r-code",
+    "title": "Running computational tasks in R",
+    "section": "Debugging R Code",
+    "text": "Debugging R Code\nWriting R code often involves unexpected errors, warnings, or incorrect outputs. Effective debugging strategies help identify issues quickly, saving time and improving code reliability. Debugging tools allow users to step through execution, inspect variable values, and trace errors at runtime.\n\nWhy Debugging Matters?\n\nHelps locate logic errors and unexpected behavior.\n\nAllows interactive inspection of variables during execution.\n\nEnables tracing of function calls to find where an error originates.\n\nReduces reliance on excessive print() statements for debugging.\n\n\n\nCommon Debugging Techniques in R\n\n\n\n\n\n\n\nMethod\nUse Case\n\n\n\n\nbrowser()\nInteractive debugging by pausing function execution.\n\n\ntraceback()\nIdentifies where an error occurred after execution fails.\n\n\ndebug()\nStep-through debugging for specific functions.\n\n\noptions(error = recover)\nAllows selecting the function frame where an error occurred.\n\n\ntryCatch()\nHandles errors gracefully without stopping execution.\n\n\n\n\n\nExample: Using browser() for Step-by-Step Debugging\nfoo &lt;- function(x) {\n  browser()\n  return(x * 2)\n}\n\nfoo(10)\n\n\nExplanation:\n\nbrowser() allows stepwise execution, helping debug unexpected errors.\nThe function pauses at browser(), enabling users to inspect variables interactively.\n\nVideo"
+  },
+  {
+    "objectID": "blog/2024-08-group-meeting-computational-tasks/index.html#parallelisation-in-r",
+    "href": "blog/2024-08-group-meeting-computational-tasks/index.html#parallelisation-in-r",
+    "title": "Running computational tasks in R",
+    "section": "Parallelisation in R",
+    "text": "Parallelisation in R\nParallel computing significantly reduces execution time by distributing workloads across multiple CPU cores or machines. R provides several parallel computing strategies, each suited for different use cases, from simple parallel loops to high-performance distributed computing.\n\nWhy Parallelisation Matters?\n\nReduces execution time for large datasets and simulations.\n\nUtilises multiple CPU cores to improve efficiency.\n\nAllows for distributed computing across clusters or cloud services.\n\n\n\nCommon Parallelisation Strategies in R\n\n\n\n\n\n\n\nMethod\nUse Case\n\n\n\n\nforeach + doParallel\nLoops that can be parallelised across CPU cores.\n\n\nparallel::mclapply()\nMulti-core version of lapply() (Linux/macOS only).\n\n\nfuture + furrr\nAsynchronous parallel computing with flexible backends.\n\n\nmirai\nHigh-performance, low-overhead async computing.\n\n\n\nUsing the right parallelisation approach depends on the type of computation, hardware resources, and scalability requirements.\n\n\n\nExample: Parallelising Loops with foreach\nUsing parallel computing significantly reduces execution time.\n\n\n\nRegular for() Loop\nresult &lt;- NULL\n\nfor (i in 1:1000) {\n  result[i] &lt;- rnorm(1)^2 \n}\n\n\n\n\n\nParallelised foreach() Loop\nlibrary(foreach)\nlibrary(doParallel)\n\ncl &lt;- makeCluster(parallel::detectCores() - 1)\nregisterDoParallel(cl)\n\nresult &lt;- foreach(i = 1:1000, .combine = 'c') %dopar% {\n  rnorm(1)^2 \n}\n\nstopCluster(cl)\n\n\n\n\n\nExplanation:\n\nStandard for() loops execute sequentially, which is slow for large-scale tasks.\n\nforeach() with doParallel allows parallel execution, using multiple CPU cores.\n\nmakeCluster(parallel::detectCores() - 1) ensures all but one core are used, preventing system overload.\n\n\nBest Practice:\n\nAlways test code sequentially first before enabling parallel execution to debug potential issues.\n\nEnsure efficient memory usage, as parallel processing may increase RAM consumption.\n\nUse stopCluster(cl) after parallel execution to release system resources.\nUsing makeCluster(parallel::detectCores() - 1) may overload the system, especially on shared servers or personal machines, leading to performance degradation for other tasks. Best practice suggests limiting the number of cores to 2 in CRAN package examples and vignettes to ensure compatibility across different systems and prevent excessive resource consumption.\n\n🔗 Useful Resources\n📖 foreach Package Documentation\n📖 future Package Documentation\n📖 mirai: Lightweight Async Computing\n📖 Parallel Computing in R Guide\n————————————————————————\n\n\nConclusion\nBy implementing these techniques, you can run computational tasks in R more efficiently, reducing runtime and improving workflow performance."
+  },
+  {
+    "objectID": "blog/2025-03-group-meeting-precision-memory/index.html",
+    "href": "blog/2025-03-group-meeting-precision-memory/index.html",
+    "title": "Floating-point precision, memory and partial matching in R",
     "section": "",
-    "text": "Половозрастная структура населения регионов РФ по результатам переписи 1989 года.\nСоставлено по данным: http://www.demoscope.ru/"
+    "text": "I prepared this for an R session at our group meeting at the MRC Biostatistics Unit. It was first published on the group’s website."
   },
   {
-    "objectID": "posts/PVS_2021/PVS_2021.html",
-    "href": "posts/PVS_2021/PVS_2021.html",
-    "title": "ПВС регионов РФ 2021",
-    "section": "",
-    "text": "Половозрастная структура населения регионов РФ на 1 января 2021 года.\nСоставлено по данным: https://rosstat.gov.ru/storage/mediabank/Bul_chislen_nasel-pv_01-01-2021.pdf"
+    "objectID": "blog/2025-03-group-meeting-precision-memory/index.html#floating-point-precision-in-r",
+    "href": "blog/2025-03-group-meeting-precision-memory/index.html#floating-point-precision-in-r",
+    "title": "Floating-point precision, memory and partial matching in R",
+    "section": "Floating-Point Precision in R",
+    "text": "Floating-Point Precision in R\nFloating-point numbers in R are subject to precision limitations due to IEEE 754 representation. This section explores how seemingly simple operations can lead to unexpected results.\n\nExample 1: Floating-Point Comparison Fails\n\n.1 == .3 / 3\n\n[1] FALSE\n\n0.1 + 0.2 == 0.3\n\n[1] FALSE\n\n\nWhy does this return FALSE?\n\nDue to how floating-point arithmetic works in computers, numbers like 0.1, 0.3, and 0.3 / 3 are stored in binary.\nSome decimal fractions cannot be represented exactly in binary, leading to tiny rounding errors. E.g.:\n\n\nsprintf(\"%a\", 0.1)\n\n[1] \"0x1.999999999999ap-4\"\n\n\nExplanation: - 0x indicates a hexadecimal number. - 1.999999999999a represents the normalised significand (mantissa) in base-16 (hexadecimal).\n\np-4 is the exponent: p represents the power of 2 (exponent in base-2); 4 means the value is multiplied by 2⁻⁴.\nEven though mathematically .1 and .3 / 3 should be the same, their internal representations are not exactly equal.\n\n\n\nExample 2: Inspecting the Actual Value Stored in Memory\n\n.3 / 3\n\n[1] 0.1\n\nprint(.3 / 3, digits=16)\n\n[1] 0.09999999999999999\n\n\nExplanation:\n\nThe first output shows what R normally prints, which is rounded for display.\nThe second output uses digits=16 to show more of the actual stored precision.\nThis reveals that 0.3 / 3 is actually stored as 0.09999999999999999, not exactly 0.1.\n\n\n\nExample 3: Using all.equal() Instead of ==\n\nall.equal(.1, .3 / 3)\n\n[1] TRUE\n\n\nWhy does this return TRUE?\n\nall.equal() does not check for exact equality but allows a small tolerance to account for floating-point errors.\nIt is the preferred way to compare floating-point numbers in R.\nDo not use all.equal directly in if expressions—either use isTRUE(all.equal(...)) or identical if appropriate. If x and y are not equal, it returns a character string like: “Mean relative difference: 5.551115e-17”. The if statement expects TRUE or FALSE, but it receives a string, causing an error.\n\n\n\nExample 4: Machine Epsilon & Adjusting Tolerance\n\n.Machine$double.eps\n\n[1] 2.220446e-16\n\nall.equal(.1, .3 / 3, tolerance = 2.2e-17)\n\n[1] \"Mean relative difference: 1.387779e-16\"\n\n\nExplanation:\n\n.Machine$double.eps is the smallest possible difference that R can distinguish between two floating-point numbers.\nThe default tolerance of all.equal() is sqrt(.Machine$double.eps), but we can adjust it manually if needed.\n\n\n\nExample 5: Using round()\n\n.1 == round(.3 / 3, digits = 16)\n\n[1] TRUE\n\n\nExplanation:\n\nround(..., digits = 16) forces R to round the computed value to 16 decimal places, reducing precision issues.\nThe comparison 0.1 == round(0.3 / 3, digits = 16) now returns TRUE\n\n📖 More details: The R Inferno"
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "О проекте",
+    "objectID": "blog/2025-03-group-meeting-precision-memory/index.html#memory-allocation-in-r",
+    "href": "blog/2025-03-group-meeting-precision-memory/index.html#memory-allocation-in-r",
+    "title": "Floating-point precision, memory and partial matching in R",
+    "section": "Memory Allocation in R",
+    "text": "Memory Allocation in R\nMemory management in R determines how objects are stored and how much space they occupy. Understanding how R allocates memory can help optimize performance, especially with large datasets.\n\nExample 6: Comparing Memory Usage of Integer and Double\n\nlibrary(lobstr)\n\nx &lt;- 5    # Stored as double\nobj_size(x)  \n\n56 B\n\n\n\ny &lt;- 5L   # Stored as integer\nobj_size(y) \n\n56 B\n\n\nWhy are both x and y 56 bytes?\n\nEven though y is an integer (4 bytes) and x is a double (8 bytes), R adds metadata overhead.\nEvery object in R carries around 48 bytes of metadata, including type and reference count.\nMemory is aligned in multiples of 8 bytes, so the total allocation rounds up to 56 bytes.\n\n\n\nExample 7: Memory Usage for Large Vectors\n\nx_vec &lt;- rep(5, 1000000)   # Double vector\ny_vec &lt;- rep(5L, 1000000)  # Integer vector\n\nobj_size(x_vec) \n\n8.00 MB\n\nobj_size(y_vec)\n\n4.00 MB\n\n\nWhy does the integer vector use half the memory?\n\nEach integer (5L) takes 4 bytes per element.\nEach double (5) takes 8 bytes per element.\nFor large datasets, using integers instead of doubles can save significant memory.\n\n\n\nExample 8: Type Conversion Affects Memory Usage\n\ny_vec[2] = 5.0\nobj_size(y_vec)  \n\n8.00 MB\n\nnew_vec = lapply(y_vec, as.integer)\nobj_size(new_vec) \n\n64.00 MB\n\nnew_vec[2] = 5.5\nnew_vec[1:3]\n\n[[1]]\n[1] 5\n\n[[2]]\n[1] 5.5\n\n[[3]]\n[1] 5\n\nobj_size(new_vec) \n\n64.00 MB\n\n\nExplanation:\n\nAssigning 5.0 to y_vec forces R to convert the entire vector to double, increasing memory usage.\nlapply(y_vec, as.integer) converts the values back to integers, but not reducing its size.\nAssigning 5.5 back forces conversion to double again but only for the selected element because new_vec is now a list.\n\n📖 More details: Mastering Software Development in R"
+  },
+  {
+    "objectID": "blog/2025-03-group-meeting-precision-memory/index.html#partial-matching-in-r",
+    "href": "blog/2025-03-group-meeting-precision-memory/index.html#partial-matching-in-r",
+    "title": "Floating-point precision, memory and partial matching in R",
+    "section": "Partial Matching in R",
+    "text": "Partial Matching in R\nR allows partial matching of list elements, which can lead to unintended behaviour and difficult-to-debug errors.\n\nExample 9: Partial Matching Works\n\ntest_function &lt;- function(alpha = NULL, power = NULL, p = NULL, p0 = NULL) {\n  user_defined &lt;- list(alpha=alpha, power=power, p=p, p0=p0)\n  user_defined &lt;- Filter(Negate(is.null), user_defined)\n  return(user_defined)\n}\n\nresults = test_function(alpha=0.05, power=0.8)\nprint(results$p)  # Partial matching\n\n[1] 0.8\n\nprint(results)\n\n$alpha\n[1] 0.05\n\n$power\n[1] 0.8\n\n\n\ntest_function - the function takes four optional arguments, all defaulting to NULL, making them optional.\nA named list is created to store all input arguments. If an argument is not provided, it remains NULL.\nFilter(Negate(is.null), user_defined) removes all NULL elements, ensuring only explicitly provided parameters are retained.\n\nWhy is results$p returning 0.8?\n\nBecause p was not provided in test_function() call, but R still allows partial matching.\n\n\n\nExample 10: Unexpected Partial Matching in Lists\n\nx = list(data = 2, power = 10)\nx$p  \n\n[1] 10\n\n# Avoiding partial matching\noptions(warnPartialMatchDollar = TRUE)\nx$p\n\nWarning in x$p: partial match of 'p' to 'power'\n\n\n[1] 10\n\nx[[\"p\"]]\n\nNULL\n\n\nBest Practices:\n\nUse options(warnPartialMatchDollar = TRUE) to warn about unintended partial matches.\nAlways use x[[\"p\"]] instead of x$p to ensure explicit matching.\n\n📖 More details: Advanced R - Subsetting"
+  },
+  {
+    "objectID": "blog/2025-03-group-meeting-precision-memory/index.html#extending-subsetting-with-operator",
+    "href": "blog/2025-03-group-meeting-precision-memory/index.html#extending-subsetting-with-operator",
+    "title": "Floating-point precision, memory and partial matching in R",
+    "section": "Extending Subsetting with [[ Operator",
+    "text": "Extending Subsetting with [[ Operator\nNow that we’ve seen how to extract specific elements from function outputs, we can extend this idea to other cases where structured outputs require efficient subsetting.\nExtracting values from structured objects often requires a combination of sapply(), lapply(), and [[ to efficiently access named list elements."
+  },
+  {
+    "objectID": "blog/2025-03-group-meeting-precision-memory/index.html#example-11-running-multiple-t.test-and-extracting-p-values",
+    "href": "blog/2025-03-group-meeting-precision-memory/index.html#example-11-running-multiple-t.test-and-extracting-p-values",
+    "title": "Floating-point precision, memory and partial matching in R",
+    "section": "Example 11: Running Multiple t.test() and Extracting P-values",
+    "text": "Example 11: Running Multiple t.test() and Extracting P-values\nWhen running multiple tests, we can store results in a list and apply subsetting with [[.\n\nset.seed(123)\n\ndata_list &lt;- list(\n  test1 = t.test(rnorm(10), rnorm(10)),\n  test2 = t.test(rnorm(15), rnorm(15)),\n  test3 = t.test(rnorm(20), rnorm(20))\n)\n\np_values &lt;- sapply(data_list, `[[`, \"p.value\")\nprint(p_values)\n\n    test1     test2     test3 \n0.7672027 0.7040755 0.4752422 \n\n\n\ndata_list stores multiple t.test() results in a list.\nsapply(data_list, \"[[\", \"p.value\") extracts p.value from each result.\nSimilarly, [[ can extract “conf.int”, “statistic”, or “parameter”, making it a powerful way to subset structured outputs.\n\n📖 More details: Advanced R - Subsetting"
+  },
+  {
+    "objectID": "blog/2026-07-bsu-together-rag/index.html",
+    "href": "blog/2026-07-bsu-together-rag/index.html",
+    "title": "Retrieval-augmented everything: a RAG assistant for an R package",
     "section": "",
-    "text": "Публикация наборов графиков некоторых социально-экономических показателей развития регионов РФ и стран мира."
+    "text": "This post is based on a talk I gave at BSU Together at the MRC Biostatistics Unit in July 2026. Slides (PDF)\nThis is about a side project, a side quest in my scientific journey. I built a retrieval-augmented generation (RAG) system around the MAMS R package, written entirely in R and running entirely on my laptop."
+  },
+  {
+    "objectID": "blog/2026-07-bsu-together-rag/index.html#ai-is-everywhere-and-it-hallucinates",
+    "href": "blog/2026-07-bsu-together-rag/index.html#ai-is-everywhere-and-it-hallucinates",
+    "title": "Retrieval-augmented everything: a RAG assistant for an R package",
+    "section": "AI is everywhere, and it hallucinates",
+    "text": "AI is everywhere, and it hallucinates\nMany people, instead of Googling simple things, now ask an AI model directly. To check how many kilometres there are in one mile, we evaporate an ocean. And very often we hear the question: what is the best AI model to use? Frankly speaking, I think we have all been in a situation where every model, whatever its name, hallucinates at us with full confidence.\n\n\n\n\n\n\n\nEvery model is good at something.\n\n\nThere are several ways to make models hallucinate less, and most practical systems combine a few of them:\n\nRetrieval-augmented generation (RAG), the topic of this post: give the model a curated, relevant context to answer from.\nTool use, or function calling. This is fairly recent: the model can call functions to check its input, do calculations or run checks before it answers.\nCalibration and fine-tuning, which adapt a model to a specific field. It works, but it takes time, computing power and skill, and it is only possible with open-weight models."
+  },
+  {
+    "objectID": "blog/2026-07-bsu-together-rag/index.html#how-rag-works",
+    "href": "blog/2026-07-bsu-together-rag/index.html#how-rag-works",
+    "title": "Retrieval-augmented everything: a RAG assistant for an R package",
+    "section": "How RAG works",
+    "text": "How RAG works\nA RAG system starts with a corpus of documents, the knowledge base that will supply context for future requests. The documents are converted into embeddings and stored, usually in a vector database. When a user asks a question, the question goes through the same embedding step, a similarity search finds the top K most relevant chunks, and those chunks are sent to the LLM together with the question. Ideally the model then answers from the supplied context alone: no web search, no other knowledge base, and as little of its internal knowledge as possible.\n\n\n\n\n\n\n\nA typical RAG architecture. Adapted from Klesel & Wittmann (2025), doi:10.1007/s12599-025-00945-3.\n\n\n\nA detour: what is an embedding?\nTake some terms from clinical trials: experimental arm, control arm, accrual rate, stop for futility.\nOlder approaches to text analysis, such as lexicon-based content analysis, scored words on a single dimension like tonality. But “experimental arm” is neither a good-feeling nor a bad-feeling word, and a single score says nothing about its topic or context. Doing better needed complicated models and a lot of manual checking.\nAn embedding represents each piece of text as a vector of weights across many dimensions of meaning. Conceptually:\n\n\n\n\n\n\n\nA simplified embeddings matrix: each term gets a score on each trait.\n\n\nIs experimental arm about treatment? Very much, say 0.97. Is it about recruitment? Only slightly, 0.03. A value can even be negative when the meaning is opposite: stop for efficacy could score below zero on a futility dimension, because it is the opposite reason for stopping a trial. A real embedding model has hundreds of such dimensions, and one row for every piece of text."
+  },
+  {
+    "objectID": "blog/2026-07-bsu-together-rag/index.html#from-idea-to-recipe",
+    "href": "blog/2026-07-bsu-together-rag/index.html#from-idea-to-recipe",
+    "title": "Retrieval-augmented everything: a RAG assistant for an R package",
+    "section": "From idea to recipe",
+    "text": "From idea to recipe\nAlmost anything can be the corpus: your own articles, a wiki, finished projects. So I wondered whether the same could be done for an R package.\nIt can. Here is the scheme I came up with. It has two stages: preparing the data (left) and answering a question (right).\n\n\n\nThe whole pipeline: data preparation on the left, retrieval and response on the right.\n\n\n\nStage 1: preparing the data\nAn R package can’t be dropped into a RAG system as it is, so I start from the raw sources: the package tarball from CRAN, or, since it is our package, the source tree. The useful material is in the Rd files (functions, arguments, examples), the vignettes and the package website.\nThe pipeline:\n\nExtract the content from R code, examples, Markdown and HTML into one common form.\nSplit it into chunks. The chunk size is a design decision: a sentence, a paragraph or a whole document, depending on what you need.\nEmbed the chunks, turning each into a vector.\nStore the vectors next to the original text, as an index for retrieval.\n\n\n\nStage 2: retrieval and response\nWhen a user asks a question, I added one step before anything else: an LLM rewrites the question. I make a lot of typos, so I let a model fix them, bridge differences in vocabulary and spell out what the user left implicit. Many systems do something like this behind the scenes; I made it a separate step that I can inspect.\n\n\n\n\n\n\n\nHow a question finds its chunks: the question becomes a 768-dimensional vector, it is compared with every stored chunk by cosine similarity, and the top K are kept.\n\n\nThe rewritten question is embedded, a similarity search retrieves the relevant chunks, a prompt is built from the context and the question, and the whole thing goes to an LLM. Any provider works: Anthropic, OpenAI, Google or a local model. Finally, the response, which can contain code, text, links and function names, is parsed and shown in the chat window."
+  },
+  {
+    "objectID": "blog/2026-07-bsu-together-rag/index.html#the-ingredients",
+    "href": "blog/2026-07-bsu-together-rag/index.html#the-ingredients",
+    "title": "Retrieval-augmented everything: a RAG assistant for an R package",
+    "section": "The ingredients",
+    "text": "The ingredients\nEverything here is R:\n\n\n\n\n\n\n\nStep\nPackage or tool\n\n\n\n\nData preparation\n\n\n\nCorpus source\nCRAN (package tarball)\n\n\nParsing sources\nbase R + tidyverse\n\n\nChunking\nmy own code (base R + tidyverse)\n\n\nEmbeddings\nrollama (local Ollama, EmbeddingGemma)\n\n\nStorage\nplain RDS file (base R)\n\n\nRetrieval and response\n\n\n\nRetrieval scoring\ndplyr, purrr (embedding similarity)\n\n\nPrompt assembly\nmy own R script\n\n\nLLM chat\nrollama (local Ollama), httr2 (Ollama Cloud), ellmer (OpenAI, Anthropic, Google)\n\n\nInterface\nshiny + shinychat\n\n\n\nTwo choices are worth a comment. For embeddings I use EmbeddingGemma through rollama. It is a very small model, about one gigabyte of memory, and very fast. And I did not use a real vector database: for a corpus this size, an RDS file read with base R is enough."
+  },
+  {
+    "objectID": "blog/2026-07-bsu-together-rag/index.html#the-demo-chatting-with-mams",
+    "href": "blog/2026-07-bsu-together-rag/index.html#the-demo-chatting-with-mams",
+    "title": "Retrieval-augmented everything: a RAG assistant for an R package",
+    "section": "The demo: chatting with MAMS",
+    "text": "The demo: chatting with MAMS\nThe target package was MAMS, which designs multi-arm multi-stage clinical trials. The interface is a plain Shiny app with one input box that says “Ask about the MAMS package.”\n\n\n\n\n\n\n\nThe chat interface.\n\n\nSome example questions:\n\n“Make a simple design.” With no other context, the system explains that a simple design is created with the mams() function. It describes the main arguments: the number of experimental treatments K, the number of stages J, the familywise error rate alpha and the desired power. Then it gives example code you can paste straight into R.\n“How do I create a design with uneven allocation?” It explains that allocation ratios are set with the r and r0 arguments, gives an example and cites its sources.\n“How do I run simulations?” It says which function to use: first create a design object, then simulate from it. Again there is commented code, and the sources are the simulation help page and the package README. Very helpful. Very simple.\n“Who wrote Hamlet?” The model replies that it has no information about who wrote Hamlet. A shame, but the right answer. “Who wrote this package?” works fine, and frankly that is the more important question here.\n\nEverything runs locally: the embedding model, the response model and the Shiny app all sit on one laptop, and answers take a few seconds. No information leaves the machine and no internet connection is needed. I can use it on a plane, or with information I would not want to send to a remote LLM."
+  },
+  {
+    "objectID": "blog/2026-07-bsu-together-rag/index.html#under-the-hood",
+    "href": "blog/2026-07-bsu-together-rag/index.html#under-the-hood",
+    "title": "Retrieval-augmented everything: a RAG assistant for an R package",
+    "section": "Under the hood",
+    "text": "Under the hood\nEarly on I built a second Shiny app for debugging and logging, and it turned out to be one of the most useful parts of the system.\n\n\n\n\n\n\n\nThe debugging app answering “Make a simple design”, with example code.\n\n\nWith it I can:\n\nTune retrieval. The number of chunks to retrieve (top K) is adjustable; I usually use between five and ten, depending on the topic.\nSee the runtime status: which package is indexed, which models are active (Gemma 3 4B for answers and rewriting, EmbeddingGemma for embeddings) and where the index is stored.\nInspect the retrieved chunks. For each one I see its topic (in practice the help-page name), the source file and the score.\n\n\n\nRetrieved chunks and their scores for “Make a simple design”.\n\n\nTrace the pipeline. A debug tab shows every stage. For “Make a simple design”, for example, the system notices that no number of arms or stages was given, and the rewrite model turns the question into something like “Can you create a simple experimental design with K treatments and J stages?” before retrieval.\n\n\n\nThe debug tab: the original question, the LLM rewrite, the combined retrieval query and the model output.\n\n\n\nThe scoring reflects preferences I set myself. Vignette content ranks above help files, because vignettes carry more context. Chunks also get a bonus when arguments match exactly: ask for a design with K = 4, and a chunk containing K = 4 scores higher. Is this the best possible scoring? Probably not. I tried alternatives, and this one works well enough for what I need. It can be improved later."
+  },
+  {
+    "objectID": "blog/2026-07-bsu-together-rag/index.html#why-bother",
+    "href": "blog/2026-07-bsu-together-rag/index.html#why-bother",
+    "title": "Retrieval-augmented everything: a RAG assistant for an R package",
+    "section": "Why bother?",
+    "text": "Why bother?\nI had two goals. The first, honestly, was to build a RAG system myself from start to finish. The second runs through most of my work: making new and complicated statistical methods usable.\nFor MAMS we already do the usual things: a vignette, a website, short courses, regular updates to the package and its documentation. Still, I think it is not enough. We can do better. People do not read documentation anymore. They do not read help files. Even a one-page vignette is read by a small share of users; it is easier to ask ChatGPT, Gemini or Claude.\nWe can’t stop people from using general AI tools. We can build a tool that gives more correct answers and is updated much faster than any model’s training data. If we add a new function to the package today, a general model knows nothing about it, because it came after the model’s knowledge cut-off. With RAG, users get current information straight away."
+  },
+  {
+    "objectID": "blog/2026-07-bsu-together-rag/index.html#rag-on-almost-everything",
+    "href": "blog/2026-07-bsu-together-rag/index.html#rag-on-almost-everything",
+    "title": "Retrieval-augmented everything: a RAG assistant for an R package",
+    "section": "RAG on almost everything",
+    "text": "RAG on almost everything\nSo what do I want to say at the end? RAG is not perfect. It is not perfect at all, and it can make mistakes. But often, when we give the model a narrower and more relevant context, it hallucinates less. It can also be combined with the other strategies; adding tool use, for example running computations to check the model’s output, is an obvious next step. And RAG can be used on almost everything:\n\nA knowledge base of previous research. Put a hundred articles in a folder and ask who has covered a topic and who has not, without building an enormous prompt by hand. Putting a whole collection into one huge context is not always the best solution: the larger and less focused the context, the harder it can be for the model to use it well. RAG retrieves a smaller and more relevant context instead.\nA database of consultancy projects. On project thirty-five, ask “have we ever done a sample-size calculation like this?”, and learn that yes, it was project R7, and here is the approach used. This one is just an idea. I am not volunteering to build it. But if you think it is useful, you can.\n\nOne lesson from building this: better documentation makes a package better suited to RAG. The system can only retrieve what exists. Clear help pages, worked examples and vignettes are no longer written only for human readers; they are also the raw material for tools like this."
+  },
+  {
+    "objectID": "blog/2026-07-bsu-together-rag/index.html#a-pointer-ellmer",
+    "href": "blog/2026-07-bsu-together-rag/index.html#a-pointer-ellmer",
+    "title": "Retrieval-augmented everything: a RAG assistant for an R package",
+    "section": "A pointer: ellmer",
+    "text": "A pointer: ellmer\nIf you want to work with LLMs from R, look at ellmer, maintained by Posit, the company behind RStudio. It is an R interface to many LLM providers: you can generate responses, work with model outputs and build your own agents and tools. If this post made you curious, ellmer is a good place to start."
+  },
+  {
+    "objectID": "blog/index.html",
+    "href": "blog/index.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Notes on R, statistical software and whatever else I find worth writing down.\n\n\n\n\n\n\n\n\n\nLLMs in research, using R\n\n\n\nR\n\nLLM\n\nteaching\n\ncoding agents\n\n\n\n\nFour ways to put an LLM next to R, how to keep trial data away from it, an analysis that looks right but is wrong, and how to use these tools without outsourcing the learning.\n\n\n\n\n\n\n19 October 2026\n\n15 min\n\n\n\n\n\n\nRetrieval-augmented everything: a RAG assistant for an R package\n\n\n\nR\n\nRAG\n\nLLM\n\nShiny\n\nMAMS\n\n\n\n\nHow I built a local RAG system around the MAMS R package in R: embeddings, retrieval and a Shiny chat interface, all running on a laptop.\n\n\n\n\n\n\n15 July 2026\n\n12 min\n\n\n\n\n\n\nDebugging in R\n\n\n\nR\n\ngroup meeting\n\n\n\n\nbrowser(), debugonce(), traceback() and recover(), with examples in plain scripts and in Shiny apps.\n\n\n\n\n\n\n10 July 2025\n\n2 min\n\n\n\n\n\n\nFloating-point precision, memory and partial matching in R\n\n\n\nR\n\ngroup meeting\n\n\n\n\nWhy 0.1 + 0.2 == 0.3 is FALSE in R, how much memory integers and doubles take, and where partial matching of names can catch you out.\n\n\n\n\n\n\n20 March 2025\n\n6 min\n\n\n\n\n\n\nRunning computational tasks in R\n\n\n\nR\n\ngroup meeting\n\n\n\n\nBackground jobs in RStudio, profiling with profvis, debugging with browser() and parallel loops with foreach.\n\n\n\n\n\n\n22 August 2024\n\n6 min\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "publications.html",
+    "href": "publications.html",
+    "title": "Publications",
+    "section": "",
+    "text": "Research papers and books, newest first. Talks and posters are on the Talks page. For a complete list see my ORCID record."
+  },
+  {
+    "objectID": "publications.html#journal-articles",
+    "href": "publications.html#journal-articles",
+    "title": "Publications",
+    "section": "Journal articles",
+    "text": "Journal articles\n\n\nBityukova V.R., Mozgunov N.A., Gapizzhanuly G. Assessment of environmental effects of road construction in Moscow: microgeographic analysis. InterCarto. InterGIS, 28(1), 115–128, 2022. doi:10.35595/2414-9179-2022-1-28-115-128\nBityukova V.R., Mozgunov N.A. Estimation of transport flow intensity using geoinformation systems. InterCarto. InterGIS, 27(1), 195–204, 2021. doi:10.35595/2414-9179-2021-1-27-195-204\nBityukova V.R., Mozgunov N.A., Petukhova N.V. Vehicle pollution: modern tendencies in the regional centers of the Central Federal District. A multi-scale analysis. Ecology and Industry of Russia, 24(2), 57–63, 2020. doi:10.18412/1816-0395-2020-2-57-63\nPetrosian A.N., Shevchuk E.I., Kirillov P.L., Mozgunov N.A. Geographical patterns of population ageing in Russia. Demographic Review, 6(2), 55–83, 2019. doi:10.17323/demreview.v6i2.9872. English translation: 6(5), 45–69, 2020. doi:10.17323/demreview.v6i5.11460\nBityukova V.R., Mozgunov N.A. Spatial features transformation of emission from motor vehicles in Moscow. Geography, Environment, Sustainability, 12(4), 57–73, 2019. doi:10.24057/2071-9388-2019-75\nSavoskul M.S., Alekseev A.I., Kuznetsova G.Yu., Mozgunov N.A. Rural settlement and population registration within the zone of influence of the Moscow agglomeration (case study of the Borovsk district, Kaluga oblast). Moscow University Bulletin. Series 5: Geography, no. 2, 2019.\nSavoskul M.S., Mozgunov N.A., Pivovar G.A. Socio-economic transformation of small towns of the non-Chernozem region (case study of the Kaluga oblast). Moscow University Bulletin. Series 5: Geography, no. 2, 62–67, 2014.\nMozgunov N.A. Rural tourism as a factor of territorial development (case study of the Oryol oblast). Regional Studies (Regionalnye issledovaniya), no. 2, 69–82, 2010."
+  },
+  {
+    "objectID": "publications.html#books",
+    "href": "publications.html#books",
+    "title": "Publications",
+    "section": "Books",
+    "text": "Books\n\n\nKirillov P.L., Mozgunov N.A., Bannikov S.V., Bogachev D.V., Lobzhanidze N.E., Petrosian A.N., Shevchuk E.I., Romashina A.A. My city as a geography lab (in Russian). Zenodo, 2021. doi:10.5281/zenodo.16985756\nBogachev D.V., Danshin A.I., Kirillov P.L., Lev I.A., Mozgunov N.A., Naumov A.S., Sokolova D.V. Geography olympiad tasks: field routes and practical assignments in the terrain. Grades 9–11 (in Russian). Moscow: Russkoe slovo, 2015.\nAlekseevsky N.I., Dobrolyubov S.A., Tikunov V.S. and 25 co-authors, including Mozgunov N.A. The Russian Arctic in the 21st century: natural resources and development risks (in Russian). Moscow: Feoria, 2013."
+  },
+  {
+    "objectID": "publications.html#other",
+    "href": "publications.html#other",
+    "title": "Publications",
+    "section": "Other",
+    "text": "Other\nBetween 2005 and 2023 I also published about a dozen conference papers, mostly on air pollution from transport, rural tourism and regional development. From 2012 to 2025 I published nearly 40 papers with tasks and results of the All-Russian Geography Olympiad, most of them in Geografiya v shkole and Geografiya i ekologiya v shkole XXI veka. Both groups are listed on ORCID."
+  },
+  {
+    "objectID": "talks/2024-05-bsu-together/index.html",
+    "href": "talks/2024-05-bsu-together/index.html",
+    "title": "Creating user-friendly documentation to support software development",
+    "section": "",
+    "text": "Talk · BSU Together, MRC Biostatistics Unit, Cambridge\n\n\nSlides Source code\n\nA short talk about what a statistical programmer does in a methods group, using my work on the MAMS package as the example. It covers:\n\nwhat goes into a pkgdown site and how one is built from a package’s help files and vignettes;\nthe MAMS documentation site we built this way;\ninteractive output in slides, shown with a Plotly animation of the central limit theorem;\nwebR, which runs R inside the browser, so readers can edit and run MAMS examples without installing anything.\n\nOn webR, the gains are near-native speed in the browser and nothing to install, neither R on the reader’s computer nor a server. The limits at the time were that not every CRAN package was available, code runs on a single core, and access to local files is restricted.\nThe slides are a Quarto revealjs presentation styled after the BSU template, with a live webR console. They are embedded below; press F for full screen, or open them in a new tab. R takes a few seconds to load before the code cells run."
+  },
+  {
+    "objectID": "talks/2025-09-rss-mams/index.html",
+    "href": "talks/2025-09-rss-mams/index.html",
+    "title": "Advancing adaptive multi-arm multi-stage clinical trials with the MAMS R package",
+    "section": "",
+    "text": "Poster · International Clinical Trials Methodology Conference (ICTMC) 2024, Edinburgh · RSS International Conference 2025, Edinburgh\nNikita Mozgunov, Dominique-Laurent Couturier, Michael Grayling, Dominic Magirr, Philip Pallmann, Thomas Jaki\nMulti-arm multi-stage (MAMS) trials compare several treatments with a shared control over a number of stages. At each interim analysis a single arm or the whole trial can stop for futility or efficacy. Software for these designs exists, but it tends to cover one design or be hard to use for people who don’t program much.\nThe poster describes the current version of the MAMS R package. Each design lives in its own module, so a new method can be added without changing the others. Three designs are available now:\nThe worked example designs a two-stage trial with four experimental arms, normal endpoints, a one-sided familywise error rate of 0.05 and power of 0.9."
+  },
+  {
+    "objectID": "talks/2025-09-rss-mams/index.html#references",
+    "href": "talks/2025-09-rss-mams/index.html#references",
+    "title": "Advancing adaptive multi-arm multi-stage clinical trials with the MAMS R package",
+    "section": "References",
+    "text": "References\nJaki T, Pallmann P, Magirr D (2019). The R package MAMS for designing multi-arm multi-stage clinical trials. Journal of Statistical Software, 88(4), 1–25. doi:10.18637/jss.v088.i04\nWason J, Stallard N, Bowden J, Jennison C (2017). A multi-stage drop-the-losers design for multi-arm clinical trials. Statistical Methods in Medical Research, 26(1), 508–524. doi:10.1177/0962280214550759"
+  },
+  {
+    "objectID": "talks/2025-11-group-meeting-aws/index.html",
+    "href": "talks/2025-11-group-meeting-aws/index.html",
+    "title": "Running R on Amazon EC2",
+    "section": "",
+    "text": "Talk · Group meeting, MRC Biostatistics Unit\n\n\nSlides (PDF)\n\nThe session started from a familiar problem: one of the unit’s HPC accounts had gone over its CPU-hour limit. Amazon EC2 is one way to keep simulations running in the meantime. I went through the steps I followed:\n\nchoosing a region and an instance type from the price list (for example 64 vCPUs in the London region), and using the EC2 instance type finder, which recommended compute-optimised Graviton instances (C7g, C7gd, C8g) for numerical simulations;\nthe free tier and the starting credits for new accounts;\nlaunching an instance from a template, connecting over SSH and checking the load with htop;\ninstalling R on Debian and saving the configured machine as an Amazon Machine Image (AMI), so the next machine starts with R 4.5.2 already set up."
+  },
+  {
+    "objectID": "talks/index.html",
+    "href": "talks/index.html",
+    "title": "Talks and posters",
+    "section": "",
+    "text": "Slides, posters and write-ups, newest first. Most of the code behind them is on GitHub.\n\n\n\n\n\n\n\n\n\n\nDate\n\n\n\nTitle\n\n\n\nEvent\n\n\n\n\n\n\n\n\nOct 2026\n\n\nLLMs in research, using R\n\n\nData Analysis course, MPhil in Medical Devices and Advanced Therapies, Cambridge\n\n\n\n\n\n\nSep 2026\n\n\nPenalised maximum likelihood for interval-censored survival data: the survivalMPL R package\n\n\nICTMC 2026, Birmingham\n\n\n\n\n\n\nJul 2026\n\n\nRetrieval-augmented everything: a RAG assistant for an R package\n\n\nBSU Together, MRC Biostatistics Unit\n\n\n\n\n\n\nNov 2025\n\n\nRunning R on Amazon EC2\n\n\nGroup meeting, MRC BSU\n\n\n\n\n\n\nOct 2025\n\n\nContributing to base R: notes from R Dev Day\n\n\nGroup meeting, MRC BSU\n\n\n\n\n\n\nSep 2025\n\n\nAdvancing adaptive multi-arm multi-stage clinical trials with the MAMS R package\n\n\nICTMC 2024 and RSS International Conference 2025\n\n\n\n\n\n\nJul 2025\n\n\nDebugging in R\n\n\nGroup meeting, MRC BSU\n\n\n\n\n\n\nMar 2025\n\n\nFloating-point precision, memory and partial matching in R\n\n\nGroup meeting, MRC BSU\n\n\n\n\n\n\nFeb 2025\n\n\nImproving implementation of adaptive multi-arm multi-stage trials: the MAMS R package\n\n\nADMTP 2025, Regensburg\n\n\n\n\n\n\nAug 2024\n\n\nRunning computational tasks in R\n\n\nGroup meeting, MRC BSU\n\n\n\n\n\n\nMay 2024\n\n\nCreating user-friendly documentation to support software development\n\n\nBSU Together, MRC Biostatistics Unit\n\n\n\n\n\n\nNo matching items"
   }
 ]

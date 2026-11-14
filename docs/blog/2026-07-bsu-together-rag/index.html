@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-07-15">
+<meta name="description" content="How I built a local RAG system around the MAMS R package in R: embeddings, retrieval and a Shiny chat interface, all running on a laptop.">
+
+<title>Retrieval-augmented everything: a RAG assistant for an R package – Nikita Mozgunov</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-88eb214b7c3a2e3ab18e561edfa02d33.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-1716d57601f02fc4624d2c6afc8a5fd6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<meta property="og:title" content="Retrieval-augmented everything: a RAG assistant for an R package – Nikita Mozgunov">
+<meta property="og:description" content="How I built a local RAG system around the MAMS R package in R: embeddings, retrieval and a Shiny chat interface, all running on a laptop.">
+<meta property="og:image" content="https://nikotinz.github.io/blog/2026-07-bsu-together-rag/images/pipeline.png">
+<meta property="og:site_name" content="Nikita Mozgunov">
+<meta property="og:image:height" content="676">
+<meta property="og:image:width" content="1425">
+</head>
+
+<body class="nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Nikita Mozgunov</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../talks/index.html"> 
+<span class="menu-text">Talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog/index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../software.html"> 
+<span class="menu-text">Software</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../teaching.html"> 
+<span class="menu-text">Teaching</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/nikotinz"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/nikita-mozgunov-0684939b/"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#ai-is-everywhere-and-it-hallucinates" id="toc-ai-is-everywhere-and-it-hallucinates" class="nav-link active" data-scroll-target="#ai-is-everywhere-and-it-hallucinates">AI is everywhere, and it hallucinates</a></li>
+  <li><a href="#how-rag-works" id="toc-how-rag-works" class="nav-link" data-scroll-target="#how-rag-works">How RAG works</a>
+  <ul class="collapse">
+  <li><a href="#a-detour-what-is-an-embedding" id="toc-a-detour-what-is-an-embedding" class="nav-link" data-scroll-target="#a-detour-what-is-an-embedding">A detour: what is an embedding?</a></li>
+  </ul></li>
+  <li><a href="#from-idea-to-recipe" id="toc-from-idea-to-recipe" class="nav-link" data-scroll-target="#from-idea-to-recipe">From idea to recipe</a>
+  <ul class="collapse">
+  <li><a href="#stage-1-preparing-the-data" id="toc-stage-1-preparing-the-data" class="nav-link" data-scroll-target="#stage-1-preparing-the-data">Stage 1: preparing the data</a></li>
+  <li><a href="#stage-2-retrieval-and-response" id="toc-stage-2-retrieval-and-response" class="nav-link" data-scroll-target="#stage-2-retrieval-and-response">Stage 2: retrieval and response</a></li>
+  </ul></li>
+  <li><a href="#the-ingredients" id="toc-the-ingredients" class="nav-link" data-scroll-target="#the-ingredients">The ingredients</a></li>
+  <li><a href="#the-demo-chatting-with-mams" id="toc-the-demo-chatting-with-mams" class="nav-link" data-scroll-target="#the-demo-chatting-with-mams">The demo: chatting with MAMS</a></li>
+  <li><a href="#under-the-hood" id="toc-under-the-hood" class="nav-link" data-scroll-target="#under-the-hood">Under the hood</a></li>
+  <li><a href="#why-bother" id="toc-why-bother" class="nav-link" data-scroll-target="#why-bother">Why bother?</a></li>
+  <li><a href="#rag-on-almost-everything" id="toc-rag-on-almost-everything" class="nav-link" data-scroll-target="#rag-on-almost-everything">RAG on almost everything</a></li>
+  <li><a href="#a-pointer-ellmer" id="toc-a-pointer-ellmer" class="nav-link" data-scroll-target="#a-pointer-ellmer">A pointer: ellmer</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content" tabindex="-1">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Retrieval-augmented everything: a RAG assistant for an R package</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">R</div>
+    <div class="quarto-category">RAG</div>
+    <div class="quarto-category">LLM</div>
+    <div class="quarto-category">Shiny</div>
+    <div class="quarto-category">MAMS</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    How I built a local RAG system around the MAMS R package in R: embeddings, retrieval and a Shiny chat interface, all running on a laptop.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 15, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>This post is based on a talk I gave at BSU Together at the MRC Biostatistics Unit in July 2026. <a href="BSU-Together-2026-RAG-slides.pdf">Slides (PDF)</a></p>
+</div>
+</div>
+</div>
+<p>This is about a side project, a side quest in my scientific journey. I built a retrieval-augmented generation (RAG) system around the <a href="https://cran.r-project.org/package=MAMS">MAMS</a> R package, written entirely in R and running entirely on my laptop.</p>
+<section id="ai-is-everywhere-and-it-hallucinates" class="level2">
+<h2 class="anchored" data-anchor-id="ai-is-everywhere-and-it-hallucinates">AI is everywhere, and it hallucinates</h2>
+<p>Many people, instead of Googling simple things, now ask an AI model directly. To check how many kilometres there are in one mile, we evaporate an ocean. And very often we hear the question: <em>what is the best AI model to use?</em> Frankly speaking, I think we have all been in a situation where every model, whatever its name, hallucinates at us with full confidence.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/good-morning.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Every model is good at something."><img src="images/good-morning.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:55.0%" alt="Three AI logos: 'Good for Chat', 'Good for Coding', 'Good Morning'."></a></p>
+</figure>
+</div>
+<figcaption>Every model is good at something.</figcaption>
+</figure>
+</div>
+<p>There are several ways to make models hallucinate less, and most practical systems combine a few of them:</p>
+<ul>
+<li>Retrieval-augmented generation (RAG), the topic of this post: give the model a curated, relevant context to answer from.</li>
+<li>Tool use, or function calling. This is fairly recent: the model can call functions to check its input, do calculations or run checks before it answers.</li>
+<li>Calibration and fine-tuning, which adapt a model to a specific field. It works, but it takes time, computing power and skill, and it is only possible with open-weight models.</li>
+</ul>
+</section>
+<section id="how-rag-works" class="level2">
+<h2 class="anchored" data-anchor-id="how-rag-works">How RAG works</h2>
+<p>A RAG system starts with a corpus of documents, the knowledge base that will supply context for future requests. The documents are converted into embeddings and stored, usually in a vector database. When a user asks a question, the question goes through the same embedding step, a similarity search finds the top <em>K</em> most relevant chunks, and those chunks are sent to the LLM together with the question. Ideally the model then answers from the supplied context alone: no web search, no other knowledge base, and as little of its internal knowledge as possible.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/rag-architecture.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="A typical RAG architecture. Adapted from Klesel &amp; Wittmann (2025), doi:10.1007/s12599-025-00945-3."><img src="images/rag-architecture.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%" alt="Diagram: documents are embedded and stored in a vector database; a user question is embedded, a similarity search finds the top-k matches, and the context plus question go to the LLM, which returns the answer."></a></p>
+</figure>
+</div>
+<figcaption>A typical RAG architecture. Adapted from Klesel &amp; Wittmann (2025), <a href="https://doi.org/10.1007/s12599-025-00945-3">doi:10.1007/s12599-025-00945-3</a>.</figcaption>
+</figure>
+</div>
+<section id="a-detour-what-is-an-embedding" class="level3">
+<h3 class="anchored" data-anchor-id="a-detour-what-is-an-embedding">A detour: what is an embedding?</h3>
+<p>Take some terms from clinical trials: <em>experimental arm</em>, <em>control arm</em>, <em>accrual rate</em>, <em>stop for futility</em>.</p>
+<p>Older approaches to text analysis, such as lexicon-based content analysis, scored words on a single dimension like tonality. But “experimental arm” is neither a good-feeling nor a bad-feeling word, and a single score says nothing about its topic or context. Doing better needed complicated models and a lot of manual checking.</p>
+<p>An embedding represents each piece of text as a vector of weights across many dimensions of meaning. Conceptually:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/embeddings-matrix.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="A simplified embeddings matrix: each term gets a score on each trait."><img src="images/embeddings-matrix.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:55.0%" alt="Matrix with rows experimental arm, control arm, accrual rate, stop for futility and columns: is it a treatment, is it recruitment, is it a futility rule. Experimental arm scores 0.97 on treatment; accrual rate 0.96 on recruitment; stop for futility 0.98 on futility rule."></a></p>
+</figure>
+</div>
+<figcaption>A simplified embeddings matrix: each term gets a score on each trait.</figcaption>
+</figure>
+</div>
+<p>Is <em>experimental arm</em> about treatment? Very much, say 0.97. Is it about recruitment? Only slightly, 0.03. A value can even be negative when the meaning is opposite: <em>stop for efficacy</em> could score below zero on a futility dimension, because it is the opposite reason for stopping a trial. A real embedding model has hundreds of such dimensions, and one row for every piece of text.</p>
+</section>
+</section>
+<section id="from-idea-to-recipe" class="level2">
+<h2 class="anchored" data-anchor-id="from-idea-to-recipe">From idea to recipe</h2>
+<p>Almost anything can be the corpus: your own articles, a wiki, finished projects. So I wondered whether the same could be done for an R package.</p>
+<p>It can. Here is the scheme I came up with. It has two stages: preparing the data (left) and answering a question (right).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pipeline.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="The whole pipeline: data preparation on the left, retrieval and response on the right."><img src="images/pipeline.png" class="img-fluid figure-img" alt="Diagram. Left: raw sources (Rd files, vignettes, articles) go through extraction, chunking and embedding into a vector database. Right: the user's question is rewritten by an LLM, embedded, matched against the database, assembled into a prompt, sent to an LLM, and the parsed answer is shown in the Shiny chat."></a></p>
+<figcaption>The whole pipeline: data preparation on the left, retrieval and response on the right.</figcaption>
+</figure>
+</div>
+<section id="stage-1-preparing-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="stage-1-preparing-the-data">Stage 1: preparing the data</h3>
+<p>An R package can’t be dropped into a RAG system as it is, so I start from the raw sources: the package tarball from CRAN, or, since it is our package, the source tree. The useful material is in the <code>Rd</code> files (functions, arguments, examples), the vignettes and the package website.</p>
+<p>The pipeline:</p>
+<ol type="1">
+<li>Extract the content from R code, examples, Markdown and HTML into one common form.</li>
+<li>Split it into chunks. The chunk size is a design decision: a sentence, a paragraph or a whole document, depending on what you need.</li>
+<li>Embed the chunks, turning each into a vector.</li>
+<li>Store the vectors next to the original text, as an index for retrieval.</li>
+</ol>
+</section>
+<section id="stage-2-retrieval-and-response" class="level3">
+<h3 class="anchored" data-anchor-id="stage-2-retrieval-and-response">Stage 2: retrieval and response</h3>
+<p>When a user asks a question, I added one step before anything else: an LLM rewrites the question. I make a lot of typos, so I let a model fix them, bridge differences in vocabulary and spell out what the user left implicit. Many systems do something like this behind the scenes; I made it a separate step that I can inspect.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/retrieval.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="How a question finds its chunks: the question becomes a 768-dimensional vector, it is compared with every stored chunk by cosine similarity, and the top K are kept."><img src="images/retrieval.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%" alt="Diagram: user question, embed_texts with the embeddinggemma model, a 768-dimensional query vector; stored chunk embeddings; cosine similarity for each chunk; sort descending and keep top-k chunks with their scores and source files."></a></p>
+</figure>
+</div>
+<figcaption>How a question finds its chunks: the question becomes a 768-dimensional vector, it is compared with every stored chunk by cosine similarity, and the top <em>K</em> are kept.</figcaption>
+</figure>
+</div>
+<p>The rewritten question is embedded, a similarity search retrieves the relevant chunks, a prompt is built from the context and the question, and the whole thing goes to an LLM. Any provider works: Anthropic, OpenAI, Google or a local model. Finally, the response, which can contain code, text, links and function names, is parsed and shown in the chat window.</p>
+</section>
+</section>
+<section id="the-ingredients" class="level2">
+<h2 class="anchored" data-anchor-id="the-ingredients">The ingredients</h2>
+<p>Everything here is R:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Step</th>
+<th>Package or tool</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>Data preparation</em></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Corpus source</td>
+<td>CRAN (package tarball)</td>
+</tr>
+<tr class="odd">
+<td>Parsing sources</td>
+<td>base R + tidyverse</td>
+</tr>
+<tr class="even">
+<td>Chunking</td>
+<td>my own code (base R + tidyverse)</td>
+</tr>
+<tr class="odd">
+<td>Embeddings</td>
+<td><code>rollama</code> (local Ollama, EmbeddingGemma)</td>
+</tr>
+<tr class="even">
+<td>Storage</td>
+<td>plain RDS file (base R)</td>
+</tr>
+<tr class="odd">
+<td><em>Retrieval and response</em></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Retrieval scoring</td>
+<td><code>dplyr</code>, <code>purrr</code> (embedding similarity)</td>
+</tr>
+<tr class="odd">
+<td>Prompt assembly</td>
+<td>my own R script</td>
+</tr>
+<tr class="even">
+<td>LLM chat</td>
+<td><code>rollama</code> (local Ollama), <code>httr2</code> (Ollama Cloud), <code>ellmer</code> (OpenAI, Anthropic, Google)</td>
+</tr>
+<tr class="odd">
+<td>Interface</td>
+<td><code>shiny</code> + <code>shinychat</code></td>
+</tr>
+</tbody>
+</table>
+<p>Two choices are worth a comment. For embeddings I use EmbeddingGemma through <code>rollama</code>. It is a very small model, about one gigabyte of memory, and very fast. And I did not use a real vector database: for a corpus this size, an RDS file read with base R is enough.</p>
+</section>
+<section id="the-demo-chatting-with-mams" class="level2">
+<h2 class="anchored" data-anchor-id="the-demo-chatting-with-mams">The demo: chatting with MAMS</h2>
+<p>The target package was <a href="https://cran.r-project.org/package=MAMS">MAMS</a>, which designs multi-arm multi-stage clinical trials. The interface is a plain Shiny app with one input box that says <em>“Ask about the MAMS package.”</em></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/chat-interface.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="The chat interface."><img src="images/chat-interface.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" alt="Browser window with a Shiny app titled pkgassistR (MAMS), status lights for index, Ollama and models, and an empty chat with the input 'Ask about the MAMS package...'."></a></p>
+</figure>
+</div>
+<figcaption>The chat interface.</figcaption>
+</figure>
+</div>
+<p>Some example questions:</p>
+<ul>
+<li><em>“Make a simple design.”</em> With no other context, the system explains that a simple design is created with the <code>mams()</code> function. It describes the main arguments: the number of experimental treatments <code>K</code>, the number of stages <code>J</code>, the familywise error rate <code>alpha</code> and the desired power. Then it gives example code you can paste straight into R.</li>
+<li><em>“How do I create a design with uneven allocation?”</em> It explains that allocation ratios are set with the <code>r</code> and <code>r0</code> arguments, gives an example and cites its sources.</li>
+<li><em>“How do I run simulations?”</em> It says which function to use: first create a design object, then simulate from it. Again there is commented code, and the sources are the simulation help page and the package README. Very helpful. Very simple.</li>
+<li><em>“Who wrote Hamlet?”</em> The model replies that it has no information about who wrote Hamlet. A shame, but the right answer. <em>“Who wrote this package?”</em> works fine, and frankly that is the more important question here.</li>
+</ul>
+<p>Everything runs locally: the embedding model, the response model and the Shiny app all sit on one laptop, and answers take a few seconds. No information leaves the machine and no internet connection is needed. I can use it on a plane, or with information I would not want to send to a remote LLM.</p>
+</section>
+<section id="under-the-hood" class="level2">
+<h2 class="anchored" data-anchor-id="under-the-hood">Under the hood</h2>
+<p>Early on I built a second Shiny app for debugging and logging, and it turned out to be one of the most useful parts of the system.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/answer-and-code.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="The debugging app answering “Make a simple design”, with example code."><img src="images/answer-and-code.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%" alt="Shiny app 'MAMS Local RAG Demo' with a question box containing 'Make a simple design', a retrieved-chunks setting, runtime status and settings on the left, and the answer with example mams() code on the right."></a></p>
+</figure>
+</div>
+<figcaption>The debugging app answering “Make a simple design”, with example code.</figcaption>
+</figure>
+</div>
+<p>With it I can:</p>
+<ul>
+<li><p>Tune retrieval. The number of chunks to retrieve (top <em>K</em>) is adjustable; I usually use between five and ten, depending on the topic.</p></li>
+<li><p>See the runtime status: which package is indexed, which models are active (Gemma 3 4B for answers and rewriting, EmbeddingGemma for embeddings) and where the index is stored.</p></li>
+<li><p>Inspect the retrieved chunks. For each one I see its topic (in practice the help-page name), the source file and the score.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/retrieved-chunks.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Retrieved chunks and their scores for “Make a simple design”."><img src="images/retrieved-chunks.png" class="img-fluid figure-img" alt="Citations table with six chunks C1 to C6, each with type rd, topic, function name, source file such as man/new.bounds.Rd and man/MAMS.Rd, and scores from 0.83 to 0.79."></a></p>
+<figcaption>Retrieved chunks and their scores for “Make a simple design”.</figcaption>
+</figure>
+</div></li>
+<li><p>Trace the pipeline. A debug tab shows every stage. For “Make a simple design”, for example, the system notices that no number of arms or stages was given, and the rewrite model turns the question into something like <em>“Can you create a simple experimental design with K treatments and J stages?”</em> before retrieval.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pipeline-trace.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="The debug tab: the original question, the LLM rewrite, the combined retrieval query and the model output."><img src="images/pipeline-trace.png" class="img-fluid figure-img" alt="Debug panel. Interpretation summary: no explicit arms or stages detected, query rewrite enabled. Retrieval query: original 'Make a simple design', rewrite 'Generate a simple experimental design with K treatments and J stages'. Model output with answer, code mams(K=3, J=2, ...) and functions."></a></p>
+<figcaption>The debug tab: the original question, the LLM rewrite, the combined retrieval query and the model output.</figcaption>
+</figure>
+</div></li>
+</ul>
+<p>The scoring reflects preferences I set myself. Vignette content ranks above help files, because vignettes carry more context. Chunks also get a bonus when arguments match exactly: ask for a design with <code>K = 4</code>, and a chunk containing <code>K = 4</code> scores higher. Is this the best possible scoring? Probably not. I tried alternatives, and this one works well enough for what I need. It can be improved later.</p>
+</section>
+<section id="why-bother" class="level2">
+<h2 class="anchored" data-anchor-id="why-bother">Why bother?</h2>
+<p>I had two goals. The first, honestly, was to build a RAG system myself from start to finish. The second runs through most of my work: making new and complicated statistical methods usable.</p>
+<p>For MAMS we already do the usual things: a vignette, a website, short courses, regular updates to the package and its documentation. Still, I think it is not enough. We can do better. People do not read documentation anymore. They do not read help files. Even a one-page vignette is read by a small share of users; it is easier to ask ChatGPT, Gemini or Claude.</p>
+<p>We can’t stop people from using general AI tools. We can build a tool that gives more correct answers and is updated much faster than any model’s training data. If we add a new function to the package today, a general model knows nothing about it, because it came after the model’s knowledge cut-off. With RAG, users get current information straight away.</p>
+</section>
+<section id="rag-on-almost-everything" class="level2">
+<h2 class="anchored" data-anchor-id="rag-on-almost-everything">RAG on almost everything</h2>
+<p>So what do I want to say at the end? RAG is not perfect. It is not perfect at all, and it can make mistakes. But often, when we give the model a narrower and more relevant context, it hallucinates less. It can also be combined with the other strategies; adding tool use, for example running computations to check the model’s output, is an obvious next step. And RAG can be used on almost everything:</p>
+<ul>
+<li>A knowledge base of previous research. Put a hundred articles in a folder and ask who has covered a topic and who has not, without building an enormous prompt by hand. Putting a whole collection into one huge context is not always the best solution: the larger and less focused the context, the harder it can be for the model to use it well. RAG retrieves a smaller and more relevant context instead.</li>
+<li>A database of consultancy projects. On project thirty-five, ask “have we ever done a sample-size calculation like this?”, and learn that yes, it was project R7, and here is the approach used. This one is just an idea. I am not volunteering to build it. But if you think it is useful, you can.</li>
+</ul>
+<p>One lesson from building this: better documentation makes a package better suited to RAG. The system can only retrieve what exists. Clear help pages, worked examples and vignettes are no longer written only for human readers; they are also the raw material for tools like this.</p>
+</section>
+<section id="a-pointer-ellmer" class="level2">
+<h2 class="anchored" data-anchor-id="a-pointer-ellmer">A pointer: ellmer</h2>
+<p>If you want to work with LLMs from R, look at <a href="https://ellmer.tidyverse.org/"><code>ellmer</code></a>, maintained by Posit, the company behind RStudio. It is an R interface to many LLM providers: you can generate responses, work with model outputs and build your own agents and tools. If this post made you curious, <code>ellmer</code> is a good place to start.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/nikotinz\.github\.io\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 Nikita Mozgunov</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

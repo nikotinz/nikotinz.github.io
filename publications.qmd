@@ -1,0 +1,39 @@
+---
+title: "Publications"
+---
+
+Research papers and books, newest first. Talks and posters are on the [Talks](talks/index.qmd) page. For a complete list see my [ORCID record](https://orcid.org/0000-0003-0941-718X).
+
+## Journal articles
+
+::: pub-list
+- Bityukova V.R., **Mozgunov N.A.**, Gapizzhanuly G. Assessment of environmental effects of road construction in Moscow: microgeographic analysis. *InterCarto. InterGIS*, 28(1), 115–128, 2022. [doi:10.35595/2414-9179-2022-1-28-115-128](https://doi.org/10.35595/2414-9179-2022-1-28-115-128)
+
+- Bityukova V.R., **Mozgunov N.A.** Estimation of transport flow intensity using geoinformation systems. *InterCarto. InterGIS*, 27(1), 195–204, 2021. [doi:10.35595/2414-9179-2021-1-27-195-204](https://doi.org/10.35595/2414-9179-2021-1-27-195-204)
+
+- Bityukova V.R., **Mozgunov N.A.**, Petukhova N.V. Vehicle pollution: modern tendencies in the regional centers of the Central Federal District. A multi-scale analysis. *Ecology and Industry of Russia*, 24(2), 57–63, 2020. [doi:10.18412/1816-0395-2020-2-57-63](https://doi.org/10.18412/1816-0395-2020-2-57-63)
+
+- Petrosian A.N., Shevchuk E.I., Kirillov P.L., **Mozgunov N.A.** Geographical patterns of population ageing in Russia. *Demographic Review*, 6(2), 55–83, 2019. [doi:10.17323/demreview.v6i2.9872](https://doi.org/10.17323/demreview.v6i2.9872). English translation: 6(5), 45–69, 2020. [doi:10.17323/demreview.v6i5.11460](https://doi.org/10.17323/demreview.v6i5.11460)
+
+- Bityukova V.R., **Mozgunov N.A.** Spatial features transformation of emission from motor vehicles in Moscow. *Geography, Environment, Sustainability*, 12(4), 57–73, 2019. [doi:10.24057/2071-9388-2019-75](https://doi.org/10.24057/2071-9388-2019-75)
+
+- Savoskul M.S., Alekseev A.I., Kuznetsova G.Yu., **Mozgunov N.A.** Rural settlement and population registration within the zone of influence of the Moscow agglomeration (case study of the Borovsk district, Kaluga oblast). *Moscow University Bulletin. Series 5: Geography*, no. 2, 2019.
+
+- Savoskul M.S., **Mozgunov N.A.**, Pivovar G.A. Socio-economic transformation of small towns of the non-Chernozem region (case study of the Kaluga oblast). *Moscow University Bulletin. Series 5: Geography*, no. 2, 62–67, 2014.
+
+- **Mozgunov N.A.** Rural tourism as a factor of territorial development (case study of the Oryol oblast). *Regional Studies (Regionalnye issledovaniya)*, no. 2, 69–82, 2010.
+:::
+
+## Books
+
+::: pub-list
+- Kirillov P.L., **Mozgunov N.A.**, Bannikov S.V., Bogachev D.V., Lobzhanidze N.E., Petrosian A.N., Shevchuk E.I., Romashina A.A. *My city as a geography lab* (in Russian). Zenodo, 2021. [doi:10.5281/zenodo.16985756](https://doi.org/10.5281/zenodo.16985756)
+
+- Bogachev D.V., Danshin A.I., Kirillov P.L., Lev I.A., **Mozgunov N.A.**, Naumov A.S., Sokolova D.V. *Geography olympiad tasks: field routes and practical assignments in the terrain. Grades 9–11* (in Russian). Moscow: Russkoe slovo, 2015.
+
+- Alekseevsky N.I., Dobrolyubov S.A., Tikunov V.S. and 25 co-authors, including **Mozgunov N.A.** *The Russian Arctic in the 21st century: natural resources and development risks* (in Russian). Moscow: Feoria, 2013.
+:::
+
+## Other
+
+Between 2005 and 2023 I also published about a dozen conference papers, mostly on air pollution from transport, rural tourism and regional development. From 2012 to 2025 I published nearly 40 papers with tasks and results of the All-Russian Geography Olympiad, most of them in *Geografiya v shkole* and *Geografiya i ekologiya v shkole XXI veka*. Both groups are listed on [ORCID](https://orcid.org/0000-0003-0941-718X).

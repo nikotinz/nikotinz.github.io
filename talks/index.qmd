@@ -1,0 +1,21 @@
+---
+title: "Talks and posters"
+listing:
+  contents:
+    - "*/index.qmd"
+    - "../blog/*/index.qmd"
+  # blog posts appear here only if they have an `event:` field
+  include:
+    event: "*"
+  sort: "date desc"
+  type: table
+  fields: [date, title, event]
+  field-display-names:
+    event: "Event"
+  date-format: "MMM YYYY"
+  sort-ui: false
+  filter-ui: false
+  table-hover: true
+---
+
+Slides, posters and write-ups, newest first. Most of the code behind them is on [GitHub](https://github.com/nikotinz).

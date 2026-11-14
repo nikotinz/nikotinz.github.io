@@ -1,0 +1,164 @@
+---
+title: "Debugging in R"
+description: "browser(), debugonce(), traceback() and recover(), with examples in plain scripts and in Shiny apps."
+date: "2025-07-10"
+event: "Group meeting, MRC BSU"
+categories: [R, group meeting]
+---
+
+::: {.callout-note appearance="minimal"}
+I prepared this for an R session at our group meeting at the MRC Biostatistics Unit. It was first published on the [group's website](https://jourfixe.github.io/posts/July_2025/July_2025.html).
+:::
+
+## Introduction
+
+Debugging is essential in programming for identifying and resolving errors effectively. Good debugging skills enhance productivity and ensure code reliability.
+
+**Topics Covered:**
+
+-   `browser()`
+-   `debugonce()`
+-   `traceback()`
+-   `recover()`
+-   Debugging Shiny applications
+
+------------------------------------------------------------------------
+
+## The `browser()` Function
+
+**Purpose:** Pauses execution, allowing interactive inspection.
+
+**Example:**
+
+```{r, eval=FALSE}
+my_function <- function(x) {
+    y <- x + 10
+    browser()
+    z <- y / 2
+    return(z)
+}
+
+my_function(5)
+```
+
+**How to use:**
+
+-   Inspect variables directly.
+-   Step through code (`n` for next, `c` to continue).
+
+------------------------------------------------------------------------
+
+## The `debugonce()` Function
+
+**Purpose:** Debugs a function exactly once.
+
+**Example:**
+
+```{r, eval=FALSE}
+add_numbers <- function(a, b) {
+    sum <- a + b
+    return(sum)
+}
+
+debugonce(add_numbers)
+
+add_numbers(3, "two")
+```
+
+**How to use:**
+
+-   Automatically enters debug mode at next call.
+-   Useful for inspecting unexpected errors inside functions.
+
+------------------------------------------------------------------------
+
+## The `traceback()` Function
+
+**Purpose:** Identifies the call sequence leading to an error.
+
+**Example:**
+
+```{r, eval=FALSE}
+func_a <- function() { func_b() }
+func_b <- function() { stop("An error occurred!") }
+
+func_a()
+traceback()
+```
+
+**How to use:**
+
+-   Quickly identifies problematic calls.
+-   Ideal for debugging nested functions.
+
+------------------------------------------------------------------------
+
+## The `recover()` Function
+
+**Purpose:** Interactive debugging at the moment an error occurs.
+
+Set this first:
+
+```{r, eval=FALSE}
+options(error = recover)
+
+f1 <- function(x) { f2(x) }
+f2 <- function(x) { f3(x) }
+f3 <- function(x) { stop("Unexpected error!") }
+
+f1(10)
+```
+
+**How to use:**
+
+-   Provides menu to enter error environments.
+-   Inspect variables interactively.
+
+------------------------------------------------------------------------
+
+## Debugging Shiny Applications
+
+Debugging Shiny can be challenging. Key approaches include:
+
+-   Use `browser()` in reactive contexts:
+
+```{r, eval=FALSE}
+library(shiny)
+
+ui <- fluidPage(
+    numericInput("num", "Number:", 10),
+    textOutput("result")
+)
+
+server <- function(input, output) {
+    output$result <- renderText({
+        browser()
+        paste("Double:", input$num * 2)
+    })
+}
+
+shinyApp(ui, server)
+```
+
+-   Monitor logs and console outputs.
+
+------------------------------------------------------------------------
+
+## Summary: Key Takeaways
+
+-   `browser()` - Interactive inspection.
+-   `debugonce()` - Single-use debugging.
+-   `traceback()` - Error call sequence.
+-   `recover()` - Interactive error handling.
+-   Shiny apps - Combine `browser()`, logging, and output checks.
+
+Effective debugging greatly enhances coding efficiency and reliability.
+
+------------------------------------------------------------------------
+
+## References
+
+-   [R Debugging manual – CRAN](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Debugging)
+-   [Advanced R: Debugging R code](https://adv-r.hadley.nz/debugging.html)
+-   [RStudio: Debugging tools](https://support.rstudio.com/hc/en-us/articles/205612627-Debugging-with-RStudio)
+-   [Shiny – Debugging guide](https://shiny.rstudio.com/articles/debugging.html)

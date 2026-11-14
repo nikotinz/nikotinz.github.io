@@ -1,0 +1,14 @@
+---
+title: "Blog"
+listing:
+  contents: "*/index.qmd"
+  sort: "date desc"
+  type: default
+  categories: true
+  fields: [date, title, description, categories, reading-time]
+  date-format: "D MMMM YYYY"
+  sort-ui: false
+  filter-ui: false
+---
+
+Notes on R, statistical software and whatever else I find worth writing down.

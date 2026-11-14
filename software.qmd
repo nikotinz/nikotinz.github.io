@@ -1,0 +1,72 @@
+---
+title: "Software"
+---
+
+Packages and apps I have written or contributed to. Everything is open source.
+
+## MAMS {#mams}
+
+::: links
+[CRAN](https://cran.r-project.org/package=MAMS) [Documentation](https://tjaki.github.io/MAMS/) [Poster (ICTMC 2024, RSS 2025)](talks/2025-09-rss-mams/index.qmd)
+:::
+
+Designs multi-arm multi-stage clinical trials with normal endpoints, and with ordinal, binary and time-to-event endpoints through their asymptotic properties. I am one of the package authors, alongside Thomas Jaki, Dominique-Laurent Couturier, Dominic Magirr and Philip Pallmann. Version 3 added two designs, drop-the-losers and separate stopping rules, next to the original simultaneous stopping rule. I worked on these, on the `summary()`, `print()` and `plot()` methods, on parallel computation through the `future` framework, and on the pkgdown site with its worked examples.
+
+## survivalMPL {#survivalmpl}
+
+::: links
+[Documentation](https://survivalmpl.github.io/survivalMPL/) [ICTMC 2026 poster](talks/2026-ictmc-survivalmpl/index.qmd)
+:::
+
+Cox proportional hazards models fitted by penalised maximum likelihood. It handles exact, right-, left- and interval-censored data and delayed entry in one likelihood, and returns a smooth estimate of the baseline hazard.
+
+## shinyCLT {#shinyclt}
+
+::: links
+[CRAN](https://cran.r-project.org/package=shinyCLT) [GitHub](https://github.com/shinyCLT/shinyCLT)
+:::
+
+A Shiny app for teaching the central limit theorem and what it means for common tests. You pick the distribution, the sample size and the location and nuisance parameters for one or two groups, and the app uses Monte Carlo simulation to show how the sample means behave and how Student's t-test, Welch's t-test and the Wilcoxon test perform in that setting. I wrote it with Dominique-Laurent Couturier and Thomas Jaki, and we use it in our teaching.
+
+``` r
+install.packages("shinyCLT")
+shinyCLT::CLT()
+```
+
+## onlineFDR {#onlinefdr}
+
+::: links
+[Bioconductor](https://bioconductor.org/packages/onlineFDR/) [Documentation](https://dsrobertson.github.io/onlineFDR/)
+:::
+
+Bioconductor package for controlling the false discovery rate when hypotheses are tested one after another. In 2025 I fixed a numerical precision problem that made results differ on macOS and helped prepare the package for a new Bioconductor submission.
+
+## pkgassistR {#pkgassistr}
+
+::: links
+[Proposal](https://nikotinz.github.io/pkgassistR/) [Proposal source](https://github.com/nikotinz/pkgassistR) [Demo app](https://github.com/nikotinz/pkgassistR_demo) [Blog post](blog/2026-07-bsu-together-rag/index.qmd)
+:::
+
+A proposal to the R Consortium Infrastructure Steering Committee for a Shiny framework that answers questions about a specific R package in plain language. Answers are built from the package's own help pages, vignettes and examples, and each one cites the material it used. MAMS is the first test case, with survivalMPL and onlineFDR as checks that the design is not tied to one package.
+
+The demo runs entirely on a local machine: it indexes the MAMS source from CRAN, builds embeddings with [Ollama](https://ollama.com/), and answers questions in a Shiny app that shows the retrieved chunks next to each answer.
+
+## setwidth2 {#setwidth2}
+
+::: links
+[GitHub](https://github.com/nikotinz/setwidth2)
+:::
+
+Keeps `options("width")` in step with the size of the terminal window, so printed output wraps correctly after you resize it. It is based on [setwidth](https://cran.r-project.org/package=setwidth) by Jakson Alves de Aquino, which only worked on Unix-like systems; setwidth2 also works on Windows and macOS.
+
+``` r
+remotes::install_github("nikotinz/setwidth2")
+```
+
+## LiftsReview {#liftsreview}
+
+::: links
+[App](https://nikotinz.shinyapps.io/shinyipf/) [GitHub](https://github.com/nikotinz/shinyIPF)
+:::
+
+A side project. Enter your squat, bench press and deadlift, and the Shiny app shows where they fall among results from International Powerlifting Federation competitions.
