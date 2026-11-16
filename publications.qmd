@@ -7,6 +7,8 @@ Research papers and books, newest first. Talks and posters are on the [Talks](ta
 ## Journal articles
 
 ::: pub-list
+- Bityukova V.R., **Mozgunov N.A.**, Yarova K.K. Regional differences in cancer incidence structure as a basis for mortality reduction strategies: assessment and mapping. *InterCarto. InterGIS*, 31(1), 216–232, 2025. [doi:10.35595/2414-9179-2025-1-31-216-232](https://doi.org/10.35595/2414-9179-2025-1-31-216-232)
+
 - Bityukova V.R., **Mozgunov N.A.**, Gapizzhanuly G. Assessment of environmental effects of road construction in Moscow: microgeographic analysis. *InterCarto. InterGIS*, 28(1), 115–128, 2022. [doi:10.35595/2414-9179-2022-1-28-115-128](https://doi.org/10.35595/2414-9179-2022-1-28-115-128)
 
 - Bityukova V.R., **Mozgunov N.A.** Estimation of transport flow intensity using geoinformation systems. *InterCarto. InterGIS*, 27(1), 195–204, 2021. [doi:10.35595/2414-9179-2021-1-27-195-204](https://doi.org/10.35595/2414-9179-2021-1-27-195-204)
